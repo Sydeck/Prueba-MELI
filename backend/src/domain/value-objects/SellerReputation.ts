@@ -3,7 +3,7 @@ import { ValidationException } from '../exceptions';
  * SellerReputation VO for seller rating
  */
 
-class SellerReputation {
+export class SellerReputation {
   constructor(private readonly _score: number) {
     this.validate(_score);
   }

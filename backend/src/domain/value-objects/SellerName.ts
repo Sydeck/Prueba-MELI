@@ -4,7 +4,7 @@ import { AbstractValueObject } from './AbstractValueObjects';
 /**
  * SellerName VO for seller name
  */
-class SellerName extends AbstractValueObject<string> {
+export class SellerName extends AbstractValueObject<string> {
   protected validate(value: string): void {
     if (!value || value.trim().length === 0) {
       throw new ValidationException('Seller name cannot be empty', 'EMPTY_SELLER_NAME');

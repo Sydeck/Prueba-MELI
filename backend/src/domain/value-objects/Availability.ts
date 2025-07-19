@@ -3,7 +3,7 @@ import { ValidationException } from '../exceptions';
 /**
  * Availability VO with enum validation
  */
-class Availability {
+export class Availability {
   constructor(private readonly _stock: number, private readonly _isAvailable: boolean) {
     this.validate();
   }

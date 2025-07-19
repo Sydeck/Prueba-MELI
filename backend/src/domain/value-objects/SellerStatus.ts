@@ -4,7 +4,7 @@ import { ValidationException } from '../exceptions';
  * SellerStatus VO for seller categories
  */
 
-class SellerStatus {
+export class SellerStatus {
   constructor(private readonly _value: (typeof SellerStatus.VALID_STATUSES)[number]) {
     this.validate(_value);
   }

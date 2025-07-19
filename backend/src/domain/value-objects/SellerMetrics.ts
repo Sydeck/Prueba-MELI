@@ -4,7 +4,7 @@ import { ValidationException } from '../exceptions';
  * SellerMetrics VO for seller metrics
  */
 
-class SellerMetrics {
+export class SellerMetrics {
   constructor(private readonly _totalProducts: number, private readonly _totalSales: number) {
     this.validate();
   }
