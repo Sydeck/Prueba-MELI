@@ -198,6 +198,7 @@ mercadolibre-challenge/
 │   │   ├── 📁 hooks/           # Custom React hooks
 │   │   ├── 📁 services/        # API communication
 │   │   └── 📁 utils/           # Utility functions
+|   |   └── 📁 types/           # TypeScript type definitions
 │   └── 📁 public/              # Static assets
 ├── 📁 docs/                    # 📚 Documentation
 └── 📄 docker-compose.yml       # 🐳 Container orchestration
