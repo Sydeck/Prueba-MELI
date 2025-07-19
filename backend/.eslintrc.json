@@ -28,4 +28,8 @@
     "@typescript-eslint/prefer-optional-chain": "error"
   },
   "ignorePatterns": ["dist/", "node_modules/", "coverage/"]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> feature/domain-implementation
