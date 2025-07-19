@@ -1,4 +1,4 @@
-import { InvalidProductIdException } from "../exceptions";
+import { ValidationException } from "../exceptions";
 /**
  * ProductId VO for MercadoLibre 
  * Enforces ML validation (ej. MLM50911552)
@@ -18,12 +18,12 @@ export class ProductId {
     */
     private validate(value : string){
         if(!value || value.trim().length === 0){
-            throw new InvalidProductIdException("Product ID cannot be empty");
+            throw new ValidationException("Product ID cannot be empty", "EMPTY_PRODUCT_ID");
         }
         
         const pattern = /^ML[A-Z]\d+$/;
         if(!pattern.test(value)){
-            throw new InvalidProductIdException("Invalid product ID format");
+            throw new ValidationException("Invalid product ID format", "INVALID_PRODUCT_ID_FORMAT");
         }
     } 
 

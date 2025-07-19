@@ -1,4 +1,4 @@
-import { InvalidProductTitleException } from "../exceptions";
+import { ValidationException } from "../exceptions";
 
 class ProductTitle {
     constructor(private readonly _value: string){
@@ -14,10 +14,12 @@ class ProductTitle {
      */
     private validate(value: string): void{
         if(value.length < 3 || value.length > 100){
-            throw new InvalidProductTitleException("Product title must be between 3 and 100 characters");
+            throw new ValidationException("Product title must be between 3 and 100 characters", "INVALID_PRODUCT_TITLE_LENGTH");
         }
+        
+        //optionally validate if the title is too long
         if(value.trim().length > 255){
-            throw new InvalidProductTitleException("Product title must be less than 255 characters");
+            throw new ValidationException("Product title must be less than 255 characters", "INVALID_PRODUCT_TITLE_LENGTH");
         }
     }
 

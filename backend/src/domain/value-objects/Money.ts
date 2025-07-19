@@ -1,4 +1,4 @@
-import { InvalidMoneyException } from "../exceptions";
+import { ValidationException } from "../exceptions";
 
 /**
  * Support currencies
@@ -73,7 +73,7 @@ export class Money {
      */
     private validateAmount(amount: number) : void{
         if(amount <= 0){
-            throw new InvalidMoneyException("Amount must be greater than 0");
+            throw new ValidationException("Amount must be greater than 0", "INVALID_MONEY_AMOUNT");
         }
     }
 
@@ -82,7 +82,7 @@ export class Money {
      */
     private validateDiscount(discount: number) : void{
         if(discount < 0 || discount > 100){
-            throw new InvalidMoneyException("Discount must be between 0 and 100");
+            throw new ValidationException("Discount must be between 0 and 100", "INVALID_MONEY_DISCOUNT");
         }    
 
     }
