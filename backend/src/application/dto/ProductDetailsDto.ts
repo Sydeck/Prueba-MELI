@@ -25,7 +25,7 @@ export interface ProductDetailsDto {
     shipping: {
       cost: number;
       isFree: boolean;
-      available: boolean;
+      estimatedDeliveryDays: number;
     };
     availability: {
       stock: number;
@@ -34,11 +34,11 @@ export interface ProductDetailsDto {
   };
 }
 
-export interface getProductDetailsRequest {
+export interface GetProductDetailsRequest {
   productId: string;
 }
 
-export interface getProductDetailResponse {
+export interface GetProductDetailResponse {
   success: boolean;
   data: ProductDetailsDto | null;
 }
