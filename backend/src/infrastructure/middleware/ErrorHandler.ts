@@ -1,25 +1,22 @@
 import { NextFunction, Request, Response } from 'express';
-import { ValidationException } from '@domain/exceptions/ValidationException';
+import { DomainException } from '@domain/exceptions';
 
 export class ErrorHandler {
-  static handle(err: Error, req: Request, res: Response, next: NextFunction): void {
-    console.error('Error Ocurred', {
-      message: err.message,
-      stack: err.stack,
-      timestamp: new Date().toISOString(),
-      path: req.path,
-      method: req.method,
-      status: res.statusCode,
-    });
-    if (err instanceof ValidationException) {
-      res.status(err.httpStatus).json({
+  static handle = (error: Error, req: Request, res: Response, next: NextFunction): void => {
+    console.log('ErrorHandler', error);
+    if (error instanceof DomainException) {
+      // Reset status code
+      res.status(error.httpStatus).json({
         error: {
-          code: err.code,
-          message: err.message,
+          code: error.code,
+          message: error.message,
           timestamp: new Date().toISOString(),
         },
       });
+      return;
     }
+
+    // Handle unexpected errors
     res.status(500).json({
       error: {
         code: 'INTERNAL_SERVER_ERROR',
@@ -27,5 +24,5 @@ export class ErrorHandler {
         timestamp: new Date().toISOString(),
       },
     });
-  }
+  };
 }

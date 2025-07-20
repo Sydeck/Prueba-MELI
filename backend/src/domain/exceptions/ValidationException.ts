@@ -1,7 +1,7 @@
 import { DomainException } from './DomainException';
 
 export class ValidationException extends DomainException {
-  readonly httpStatus = 400;
+  readonly httpStatus = 404;
 
   constructor(
     message: string = 'Validation failed',

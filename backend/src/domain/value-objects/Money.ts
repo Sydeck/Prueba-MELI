@@ -1,4 +1,4 @@
-import { ValidationException } from '../exceptions';
+import { ValidationException } from '../exceptions/ValidationException';
 
 /**
  * Support currencies
@@ -71,7 +71,7 @@ export class Money {
    * Validate amount
    */
   private validateAmount(amount: number): void {
-    if (amount <= 0) {
+    if (amount < 0) {
       throw new ValidationException('Amount must be greater than 0', 'INVALID_MONEY_AMOUNT');
     }
   }

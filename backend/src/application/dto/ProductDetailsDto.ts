@@ -22,15 +22,15 @@ export interface ProductDetailsDto {
       totalProducts: number;
       totalSales: number;
     };
-    shipping: {
-      cost: number;
-      isFree: boolean;
-      estimatedDeliveryDays: string;
-    };
-    availability: {
-      stock: number;
-      available: boolean;
-    };
+  };
+  shipping: {
+    cost: number;
+    isFree: boolean;
+    estimatedDeliveryDays: string;
+  };
+  availability: {
+    stock: number;
+    available: boolean;
   };
 }
 
@@ -38,7 +38,7 @@ export interface GetProductDetailsRequest {
   productId: string;
 }
 
-export interface GetProductDetailResponse {
+export interface GetProductDetailsResponse {
   success: boolean;
   data: ProductDetailsDto | null;
 }

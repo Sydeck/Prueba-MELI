@@ -3,11 +3,11 @@ import { GetProductDetailsPort } from '@application/ports/inbound/GetProductDeta
 import {
   ProductDetailsDto,
   GetProductDetailsRequest,
-  GetProductDetailResponse,
+  GetProductDetailsResponse,
 } from '@application/dto/ProductDetailsDto';
 import { Product } from '@domain/entities/Product';
 import { ProductId } from '@domain/value-objects/ProductId';
-import { ValidationException } from '@domain/exceptions/ValidationException';
+import { ValidationException, ProductNotFoundException } from '@domain/exceptions';
 
 /**
  * Use case for getting product details
@@ -17,7 +17,7 @@ import { ValidationException } from '@domain/exceptions/ValidationException';
 export class GetProductDetailsUseCase implements GetProductDetailsPort {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  async execute(request: GetProductDetailsRequest): Promise<GetProductDetailResponse> {
+  async execute(request: GetProductDetailsRequest): Promise<GetProductDetailsResponse> {
     try {
       /**
        * Validate product id
@@ -28,7 +28,7 @@ export class GetProductDetailsUseCase implements GetProductDetailsPort {
        */
       const product = await this.productRepository.findById(productId);
       if (!product) {
-        throw new ValidationException('Product not found', 'PRODUCT_NOT_FOUND');
+        throw new ProductNotFoundException('Product not found');
       }
       /**
        * Map product to DTO
@@ -38,8 +38,8 @@ export class GetProductDetailsUseCase implements GetProductDetailsPort {
         data: this.mapToDto(product),
       };
     } catch (error) {
-      if (error instanceof ValidationException) {
-        throw Error;
+      if (error instanceof ProductNotFoundException) {
+        throw error;
       }
       throw new ValidationException('Internal server error', 'INTERNAL_SERVER_ERROR');
     }
@@ -66,15 +66,15 @@ export class GetProductDetailsUseCase implements GetProductDetailsPort {
           totalProducts: product.seller.metrics.totalProducts,
           totalSales: product.seller.metrics.totalSales,
         },
-        shipping: {
-          cost: product.shipping.cost.amount,
-          isFree: product.shipping.isFree,
-          estimatedDeliveryDays: product.shipping.estimatedDeliveryDays,
-        },
-        availability: {
-          stock: product.availability.stock,
-          available: product.availability.isAvailable,
-        },
+      },
+      shipping: {
+        cost: product.shipping.cost.amount,
+        isFree: product.shipping.isFree,
+        estimatedDeliveryDays: product.shipping.estimatedDeliveryDays,
+      },
+      availability: {
+        stock: product.availability.stock,
+        available: product.availability.isAvailable,
       },
     };
   }

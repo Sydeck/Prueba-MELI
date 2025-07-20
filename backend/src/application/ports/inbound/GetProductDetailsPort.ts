@@ -1,8 +1,8 @@
 import {
-  getProductDetailsRequest,
-  getProductDetailResponse,
+  GetProductDetailsRequest,
+  GetProductDetailsResponse,
 } from '@application/dto/ProductDetailsDto';
 
 export interface GetProductDetailsPort {
-  execute(request: getProductDetailsRequest): Promise<getProductDetailResponse>;
+  execute(request: GetProductDetailsRequest): Promise<GetProductDetailsResponse>;
 }
