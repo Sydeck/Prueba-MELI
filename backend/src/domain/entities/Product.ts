@@ -87,7 +87,7 @@ export class Product {
    * Business logic: Check if product has free shipping
    */
   public hasFreeShipping(): boolean {
-    return this._shipping.isFree();
+    return this._shipping.isFree;
   }
 
   /**
