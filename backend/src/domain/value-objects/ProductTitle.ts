@@ -7,17 +7,12 @@ import { AbstractValueObject } from './AbstractValueObjects';
 export class ProductTitle extends AbstractValueObject<string> {
   //optionally validate if the title is too long
   protected validate(value: string): void {
+    if (!value || value.trim().length === 0) {
+      throw new ValidationException('Product title cannot be empty', 'EMPTY_PRODUCT_TITLE');
+    }
     if (value.length < 3 || value.length > 100) {
       throw new ValidationException(
         'Product title must be between 3 and 100 characters',
-        'INVALID_PRODUCT_TITLE_LENGTH'
-      );
-    }
-
-    //optionally validate if the title is too long
-    if (value.trim().length > 255) {
-      throw new ValidationException(
-        'Product title must be less than 255 characters',
         'INVALID_PRODUCT_TITLE_LENGTH'
       );
     }

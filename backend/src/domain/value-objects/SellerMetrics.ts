@@ -34,7 +34,11 @@ export class SellerMetrics {
       );
     }
     if (this._totalSales < 0) {
-      throw new ValidationException('Total sales must be greater than 0', 'INVALID_SELLER_METRICS');
+      throw new ValidationException(
+        'Total sales must be greater than 0',
+        'INVALID_SELLER_METRICS',
+        500
+      );
     }
   }
 

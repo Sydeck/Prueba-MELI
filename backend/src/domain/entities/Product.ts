@@ -109,7 +109,11 @@ export class Product {
    */
   public calculateTotalCost(quantity: number = 1): Money {
     if (!this.isAvailableForPurchase) {
-      throw new ValidationException('Product not available for purchase', 'PRODUCT_NOT_AVAILABLE');
+      throw new ValidationException(
+        'Product not available for purchase',
+        'PRODUCT_NOT_AVAILABLE',
+        409
+      );
     }
     const ProductCost = new Money(
       this._price.getDiscountAmount() * quantity,

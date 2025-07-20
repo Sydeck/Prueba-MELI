@@ -17,7 +17,7 @@ export class SellerName extends AbstractValueObject<string> {
       );
     }
 
-    if (!/^[a-zA-Z\s]+$/.test(value)) {
+    if (!/^[a-zA-Z0-9\s\-&.]+$/.test(value)) {
       throw new ValidationException(
         'Seller name must contain only letters and spaces',
         'INVALID_SELLER_NAME_FORMAT'

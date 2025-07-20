@@ -33,7 +33,7 @@ export class Availability {
    */
   private validate(): void {
     if (this._stock < 0) {
-      throw new ValidationException('Stock cannot be negative', 'INVALID_AVAILABILITY_STOCK');
+      throw new ValidationException('Stock cannot be negative', 'INVALID_AVAILABILITY_STOCK', 500);
     }
   }
 

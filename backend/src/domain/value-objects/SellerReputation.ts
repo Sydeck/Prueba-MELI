@@ -11,14 +11,14 @@ export class SellerReputation {
   /*
    * Get the score
    */
-  get score(): number | null {
+  get score(): number {
     return this._score;
   }
 
   /*
    * Validate the score
    */
-  private validate(score: number | null): void {
+  private validate(score: number = 0): void {
     if (score < 0 || score > 5) {
       throw new ValidationException(
         'Score must be between 0 and 5',

@@ -7,7 +7,7 @@ import {
 } from '@application/dto/ProductDetailsDto';
 import { Product } from '@domain/entities/Product';
 import { ProductId } from '@domain/value-objects/ProductId';
-import { ValidationException, ProductNotFoundException } from '@domain/exceptions';
+import { ValidationException } from '@domain/exceptions';
 
 /**
  * Use case for getting product details
@@ -28,7 +28,7 @@ export class GetProductDetailsUseCase implements GetProductDetailsPort {
        */
       const product = await this.productRepository.findById(productId);
       if (!product) {
-        throw new ProductNotFoundException('Product not found');
+        throw new ValidationException('Product not found', 'PRODUCT_NOT_FOUND', 404);
       }
       /**
        * Map product to DTO
@@ -38,10 +38,10 @@ export class GetProductDetailsUseCase implements GetProductDetailsPort {
         data: this.mapToDto(product),
       };
     } catch (error) {
-      if (error instanceof ProductNotFoundException) {
+      if (error instanceof ValidationException) {
         throw error;
       }
-      throw new ValidationException('Internal server error', 'INTERNAL_SERVER_ERROR');
+      throw new ValidationException('Internal server error', 'INTERNAL_SERVER_ERROR', 500);
     }
   }
 
