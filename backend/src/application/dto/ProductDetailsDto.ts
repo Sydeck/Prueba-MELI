@@ -25,7 +25,7 @@ export interface ProductDetailsDto {
     shipping: {
       cost: number;
       isFree: boolean;
-      estimatedDeliveryDays: number;
+      estimatedDeliveryDays: string;
     };
     availability: {
       stock: number;

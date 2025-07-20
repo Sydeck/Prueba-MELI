@@ -4,7 +4,7 @@ export class ShippingInfo {
   constructor(
     public readonly _cost: Money,
     public readonly _isFree: boolean,
-    private readonly _estimatedDeliveryDays: number
+    private readonly _estimatedDeliveryDays: string
   ) {}
 
   /**
@@ -29,7 +29,7 @@ export class ShippingInfo {
   /**
    * Get the estimated delivery days
    */
-  get estimatedDeliveryDays(): number {
+  get estimatedDeliveryDays(): string {
     return this._estimatedDeliveryDays;
   }
 
