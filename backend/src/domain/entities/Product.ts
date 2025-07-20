@@ -42,6 +42,13 @@ export class Product {
   }
 
   /**
+   * Get product price
+   */
+  get price(): Money {
+    return this._price;
+  }
+
+  /**
    * Get product images
    */
   get images(): ProductImage[] {
