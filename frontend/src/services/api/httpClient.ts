@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
-import { ApiConfig } from './apiConfig';
+import { ApiConfig } from './ApiConfig';
 import Error from 'next/error';
 
 /**

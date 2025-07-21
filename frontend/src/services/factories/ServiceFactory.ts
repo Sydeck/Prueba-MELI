@@ -1,6 +1,6 @@
-import { ApiConfig } from '../api/apiConfig';
+import { ApiConfig } from '../api/ApiConfig';
 import { IHttpClient, AxiosHttpClient } from '../api/httpClient';
-import { IProductRepository, ProductRepository } from '../repositories/productRepository';
+import { IProductRepository, ProductRepository } from '../repositories/ProductRepository';
 
 export class ServiceFactory {
   private static instance: ServiceFactory;

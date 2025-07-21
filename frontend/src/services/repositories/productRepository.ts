@@ -1,7 +1,7 @@
 import { Product } from '@/types/product.types';
 import { ApiSuccessWrapper, HealthCheckResponse } from '@/types/api.types';
 import { IHttpClient } from '../api/httpClient';
-import { ApiConfig } from '../api/apiConfig';
+import { ApiConfig } from '../api/ApiConfig';
 import { ProductValidator } from '../validators/ProductValidator';
 
 export interface IProductRepository {
