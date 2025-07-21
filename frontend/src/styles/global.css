@@ -18,3 +18,14 @@ body {
 .ml-button-primary:hover {
   background-color: #2968C8;
 }
+.zoom-window {
+  position: absolute;       /* o fixed, según dónde quieras colocarlo */
+  width: 250px;
+  height: 250px;
+  border: 2px solid rgba(0,0,0,0.3);
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: 1000px 1000px; /* tamaño natural de tu imagen */
+  pointer-events: none;     /* que el mouse pase por encima de él */
+  z-index: 100;
+}
