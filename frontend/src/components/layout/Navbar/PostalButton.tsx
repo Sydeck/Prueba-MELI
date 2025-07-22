@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react';
 export default function PostalButton(): JSX.Element {
   return (
     <div className="relative col-span-3 row-span-1 lg:col-span-1 lg:flex lg:items-center">
-      {/* línea divisora sólo en mobile */}
+      {/* mobile divider line */}
       <hr
         className="
           absolute top-0 left-1/2 w-screen -translate-x-1/2
@@ -21,13 +21,21 @@ export default function PostalButton(): JSX.Element {
           lg:items-start lg:pt-0
         "
       >
-        <MapPin className="w-5 h-5 mt-[2px] lg:w-6 lg:h-6 lg:mt-0" />
+        <MapPin className="w-5 h-5 lg:w-6 lg:h-6 mt-[2px] lg:mt-0" />
 
-        <div className="flex flex-row gap-1 text-left items-end mt-2 lg:flex-col lg:gap-0">
-          <span className="text-sm font-normal text-black leading-tight whitespace-nowrap lg:text-xs lg:font-light">
+        {/* Text block */}
+        <div
+          className="
+            flex items-center gap-1
+            text-left
+            lg:flex-col lg:items-start lg:gap-0
+            leading-none
+          "
+        >
+          <span className="text-sm font-normal text-black whitespace-nowrap lg:text-xs lg:font-light">
             Ingresa tu
           </span>
-          <span className="text-sm font-normal text-black leading-tight whitespace-nowrap">
+          <span className="text-sm font-normal text-black whitespace-nowrap lg:text-sm">
             código postal
           </span>
         </div>

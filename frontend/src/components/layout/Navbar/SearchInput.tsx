@@ -6,7 +6,7 @@ export default function SearchInput(): JSX.Element {
     <div className="relative w-full h-8 lg:h-10">
       <input
         type="text"
-        placeholder="Buscar..."
+        placeholder="Buscar productos, marcas y más..."
         className="
           w-full h-full
           rounded-sm
