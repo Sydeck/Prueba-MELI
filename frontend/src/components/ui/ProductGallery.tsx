@@ -45,6 +45,7 @@ export default function ProductGallery({
       border-radius: 8px;
       width: ${zoomContainerWidth}px;
       height: ${zoomContainerHeight}px;
+      z-index: 10;
     `,
   };
 

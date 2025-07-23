@@ -81,8 +81,6 @@ export default function ProductInfoPanel({
         className="hidden lg:flex mt-0 mb-0"
       />
 
-      <RatingStars value={rating} reviews={reviews} size="md" className="hidden lg:flex" />
-
       <div className="flex items-center justify-between lg:hidden mt-4 mb-2">
         <ConditionSoldFav
           condition={condition}

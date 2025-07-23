@@ -22,7 +22,7 @@ export default function RatingStars({ value, reviews, size = 'md', className }: 
         {[0, 1, 2, 3, 4].map(i => {
           const fillPct = Math.min(Math.max(value - i, 0), 1) * 100;
           return (
-            <span key={i} className={`relative mr-0.5 ${starSize}`}>
+            <span key={i} className={`relative z-0 mr-0.5 ${starSize}`}>
               {/* base vacía */}
               <svg viewBox="0 0 24 24" className="w-full h-full text-gray-300" fill="currentColor">
                 <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.401 8.168L12 18.896l-7.335 3.869 1.401-8.168L.132 9.21l8.2-1.192z" />
