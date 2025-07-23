@@ -16,8 +16,8 @@ const reviews = 36; // total de reseñas
 export default function ProductPageShell(): JSX.Element {
   const [fav, setFav] = useState(false);
   return (
-    <main className="w-full bg-white">
-      <div className="max-w-screen-xl lg:mx-11 lg:pt-2 lg:pb-3 ">
+    <main className="w-full bg-red-500">
+      <div className="max-w-screen-xl mx-auto bg-white">
         {/* 1) Breadcrumbs + actions (full width, always on top) */}
         <div className="hidden lg:block py-3 bg-green-500">
           {/* TODO: Breadcrumbs + "Volver | Vender uno igual | Compartir" */}
@@ -49,7 +49,7 @@ export default function ProductPageShell(): JSX.Element {
                 brandLinkLabel="Visita la tienda oficial de Nothing Tech"
                 condition="Nuevo"
                 soldQty={500}
-                title="Nothing Phone (3a) Pro 12gb Ram..."
+                title="Nothing Phone (3a) Pro 12gb Ram 256gb Rom Teléfono 5g Smartphone Snapdragon 7s Gen 3 Octa Cpu 6.77'' Amoled Pantalla 120hz 3000 Nits Nfc Bluetooth 5.4 Color Negro"
                 rating={4.8}
                 reviews={36}
                 oldPrice="$ 14,943"

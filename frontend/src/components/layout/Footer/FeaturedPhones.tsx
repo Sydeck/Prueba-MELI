@@ -85,7 +85,7 @@ export default function FeaturedPhones({ blocks }: FeaturedPhonesProps): JSX.Ele
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
-    <section className="bg-gray-50 rounded-md mx-4 lg:mx-0 p-4 lg:p-6 space-y-3">
+    <section className=" w-full max-w-screen-xl  mx-auto rounded-md bg-white p-4 lg:p-6 lg:mb-4 space-y-3">
       <h2 className="text-base font-medium text-gray-900 lg:text-lg">
         Destacado en Celulares y Telefonía
       </h2>
