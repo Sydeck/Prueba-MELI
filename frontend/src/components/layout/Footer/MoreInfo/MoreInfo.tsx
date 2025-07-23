@@ -32,18 +32,19 @@ export default function MoreInfo({
 
   return (
     <section className="w-full mt-6">
-      <ToggleButton open={open} onClick={toggle} />
+      <div className="hidden lg:block">
+        <ToggleButton open={open} onClick={toggle} />
 
-      {/* Animated panel */}
-      <div
-        ref={panelRef}
-        className={clsx(
-          'moreinfo-panel overflow-hidden opacity-0 max-h-0 transition-[max-height,opacity] duration-300 ease-in-out'
-        )}
-      >
-        <ColumnsGrid columns={columnsData} centerOnMobile={true} />
+        {/* Animated panel */}
+        <div
+          ref={panelRef}
+          className={clsx(
+            'moreinfo-panel overflow-hidden opacity-0 max-h-0 transition-[max-height,opacity] duration-300 ease-in-out'
+          )}
+        >
+          <ColumnsGrid columns={columnsData} centerOnMobile={true} />
+        </div>
       </div>
-
       <BottomLinks links={bottomLinksData} />
       <LegalNotice text={legal} />
     </section>
