@@ -50,9 +50,9 @@ export default function ProductGallery({
 
   return (
     <>
-      <div className="flex justify-start max-w-[700px] bg-white">
+      <div className="flex justify-start max-w-[700px]  ml-4 ">
         {/* Thumbnails */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col ml-2 mt-2">
           {images.map((src, idx) => (
             <button
               key={idx}
@@ -67,7 +67,7 @@ export default function ProductGallery({
         </div>
 
         {/* ReactImageZoom preview */}
-        <div className="ml-4 cursor-pointer" onClick={() => setModalOpen(true)}>
+        <div className="ml-4  cursor-pointer" onClick={() => setModalOpen(true)}>
           <ReactImageZoom {...zoomProps} />
         </div>
       </div>
