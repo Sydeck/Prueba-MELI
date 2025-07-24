@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom'
+require('@testing-library/jest-dom');
 
 // Mock Next.js router
 jest.mock('next/router', () => ({
@@ -20,14 +20,14 @@ jest.mock('next/router', () => ({
         emit: jest.fn(),
       },
       isFallback: false,
-    }
+    };
   },
-}))
+}));
 
 // Mock fetch for API calls
-global.fetch = jest.fn()
+global.fetch = jest.fn();
 
 // Setup for each test
 beforeEach(() => {
-  jest.clearAllMocks()
-})
+  jest.clearAllMocks();
+});

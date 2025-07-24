@@ -18,7 +18,9 @@ export class Validator {
    */
   require(): Validator {
     this.rules.push((value, field) => {
-      if (!value) throw new globalThis.Error(`${field} is required`);
+      if (value === null || value === undefined) {
+        throw new globalThis.Error(`${field} is required`);
+      }
     });
     return this;
   }

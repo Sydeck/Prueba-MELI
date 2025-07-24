@@ -102,6 +102,7 @@ export default function MobileCarousel({
       {/* Track */}
       <div
         ref={trackRef}
+        data-testid="carousel-track" // <-- añadido
         className="flex snap-x snap-mandatory overflow-x-auto no-scrollbar touch-pan-y scroll-smooth select-none"
       >
         {images.map((src, i) => (
@@ -109,6 +110,7 @@ export default function MobileCarousel({
             key={src}
             className="snap-center shrink-0 w-full h-[400px] flex items-center justify-center bg-white relative"
           >
+            {console.log('carrousek', src)}
             <img
               src={src}
               alt={`img-${i}`}
@@ -148,6 +150,7 @@ export default function MobileCarousel({
           <button
             key={i}
             aria-label={`Ir a imagen ${i + 1}`}
+            data-testid={`dot-${i}`}
             onClick={() => goTo(i)}
             className={clsx(
               'w-2 h-2 rounded-full transition',

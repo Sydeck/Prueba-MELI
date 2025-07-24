@@ -6,5 +6,5 @@ const app = expressApp.getApp();
 app.listen(PORT, () => {
   console.log(`🚀 Backend server running on port ${PORT}`);
   console.log(`📍 Health check: http://localhost:${PORT}/health`);
-  console.log(`📦 API: http://localhost:${PORT}/api/v1/products/MLA123456789`);
+  console.log(`📦 API: http://localhost:${PORT}/api/v1/products/MLA987654321`);
 });

@@ -1,11 +1,11 @@
-import { Product } from '@/types/product.types';
+import { ProductDetailsDto } from '@/types/product.types';
 import { ApiSuccessWrapper, HealthCheckResponse } from '@/types/api.types';
 import { IHttpClient } from '../api/httpClient';
-import { ApiConfig } from '../api/ApiConfig';
+import { ApiConfig } from '../api/apiConfig';
 import { ProductValidator } from '../validators/ProductValidator';
 
 export interface IProductRepository {
-  getById(id: string): Promise<Product>;
+  getById(id: string): Promise<ProductDetailsDto>;
   healthCheck(): Promise<HealthCheckResponse>;
 }
 
@@ -15,17 +15,16 @@ export class ProductRepository implements IProductRepository {
   /**
    * Get a product by its ID
    */
-  async getById(productId: string): Promise<Product> {
+  async getById(productId: string): Promise<ProductDetailsDto> {
     ProductValidator.validateId(productId);
     try {
       /**
        * Validate the product ID
        */
-      ProductValidator.validateProduct(productId);
       const endpoint = this.config.buildEndpoint(this.config.endpoints.product.getById, {
         id: productId,
       });
-      const response = await this.httpClient.get<ApiSuccessWrapper>(endpoint);
+      const response = await this.httpClient.get<ApiSuccessWrapper<ProductDetailsDto>>(endpoint);
       if (!response.data.success || !response.data.data) {
         throw new globalThis.Error('invalid response from the server');
       }

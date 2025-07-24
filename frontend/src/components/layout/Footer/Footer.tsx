@@ -13,7 +13,7 @@ export default function Footer(): JSX.Element {
     <footer className="w-full mx-auto text-gray-700 pt-6 mt-auto">
       <FeaturedPhones blocks={featuredBlocks} />
       <AppBannerMobile />
-      <div className="lg:max-w-5xl mx-auto bg-[#EDEDED] space-y-6 px-4 lg:px-4">
+      <div className="lg:max-w-5xl mx-auto bg-ml-gray-body space-y-6 px-4 lg:px-4">
         <PopularProducts products={popularProducts} />
 
         <AlphabetFilter letters={alphabet} />
