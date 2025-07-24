@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
 
 import ImageCarousel from '@/components/ui/ImageCarrousel';
-
 import BrandBadge from './BrandBadge';
 import ConditionSoldFav from './ConditionSoldFav';
 import RatingStars from './RatingStars';
@@ -11,35 +10,29 @@ import ColorCardsMobile from './ColorCardsMobile';
 import ColorThumbsDesktop from './ColorThumbsDesktop';
 import FactsBlock from './FactsBlock';
 
-import { ColorThumb } from './types';
+import { ProductVariant } from '@/types/product.types';
 
 export interface ProductInfoPanelProps {
   brandLogo: string;
   brandLinkLabel: string;
-
   condition: string;
   soldQty: number | string;
-
   title: string;
-
   rating: number;
   reviews: number;
-
   oldPrice?: string;
   price: string;
   priceCents?: string;
   discountPct?: string;
-
   installments?: string;
   ivaText?: string;
-
-  colors?: ColorThumb[];
+  colors?: ProductVariant[];
   facts: string[];
-
   specsAnchorId?: string;
   onShare?: () => void;
-
   className?: string;
+  activeColor: number; // manejado por el padre
+  onColorSelect: (index: number) => void; // manejado por el padre
 }
 
 export default function ProductInfoPanel({
@@ -61,10 +54,10 @@ export default function ProductInfoPanel({
   specsAnchorId = 'product-specs',
   onShare,
   className,
+  activeColor,
+  onColorSelect,
 }: ProductInfoPanelProps) {
   const [fav, setFav] = useState(false);
-  const [activeColor, setActiveColor] = useState(0);
-
   const toggleFav = useCallback(() => setFav(v => !v), []);
   const goToSpecs = useCallback(
     () => document.getElementById(specsAnchorId)?.scrollIntoView({ behavior: 'smooth' }),
@@ -105,14 +98,14 @@ export default function ProductInfoPanel({
       {/* Carrusel + colores (mobile) */}
       <div className="lg:hidden space-y-2 mb-8">
         <ImageCarousel
-          images={['/images/img1.webp', '/images/img2.webp', '/images/img3.webp']}
+          images={colors.length > 0 ? [colors[activeColor]?.image] : []}
           fav={fav}
           onToggleFav={toggleFav}
           onShare={onShare ?? (() => navigator.share?.({ url: window.location.href }))}
         />
 
         {colors.length > 0 && (
-          <ColorCardsMobile colors={colors} activeColor={activeColor} onSelect={setActiveColor} />
+          <ColorCardsMobile colors={colors} activeColor={activeColor} onSelect={onColorSelect} />
         )}
       </div>
       {/* Rating desktop */}
@@ -127,7 +120,7 @@ export default function ProductInfoPanel({
         ivaText={ivaText}
       />
       {/* Colores desktop */}
-      <ColorThumbsDesktop colors={colors} activeColor={activeColor} onSelect={setActiveColor} />
+      <ColorThumbsDesktop colors={colors} activeColor={activeColor} onSelect={onColorSelect} />
       {/* Facts + ver características (desktop) */}
       <FactsBlock facts={facts} onGoToSpecs={goToSpecs} />
     </div>

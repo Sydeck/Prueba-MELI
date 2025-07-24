@@ -1,10 +1,11 @@
+// src/components/layout/product/ProductInfoPanel/ColorCardsMobile.tsx
 import React from 'react';
 import clsx from 'clsx';
 import { moneyFmt } from '@/utils/money';
-import { ColorThumb } from './types';
+import { ProductVariant } from '@/types/product.types';
 
 interface Props {
-  colors: ColorThumb[];
+  colors: ProductVariant[];
   activeColor: number;
   onSelect: (i: number) => void;
 }
@@ -14,7 +15,7 @@ export default function ColorCardsMobile({ colors, activeColor, onSelect }: Prop
     <>
       <p className="text-sm font-normal text-gray-800 my-2">
         Color:{' '}
-        <span className="font-semibold">{colors[activeColor]?.alt ?? 'Selecciona un color'}</span>
+        <span className="font-semibold">{colors[activeColor]?.color ?? 'Selecciona un color'}</span>
       </p>
 
       <ul className="flex flex-nowrap gap-3 overflow-x-auto no-scrollbar py-1 w-full">
@@ -22,7 +23,7 @@ export default function ColorCardsMobile({ colors, activeColor, onSelect }: Prop
           const sel = i === activeColor;
           const { int } = moneyFmt(c.price);
           return (
-            <li key={c.alt} className="shrink-0">
+            <li key={c.id} className="shrink-0">
               <button
                 type="button"
                 onClick={() => onSelect(i)}
@@ -33,8 +34,12 @@ export default function ColorCardsMobile({ colors, activeColor, onSelect }: Prop
                   sel ? 'border-2 border-ml-blue-main bg-[#E6F0FF]' : 'border-gray-300'
                 )}
               >
-                <img src={c.src} alt={c.alt} className="w-14 h-13 object-cover mb-2 items-center" />
-                <span className="text-xs text-gray-700 truncate">{c.alt}</span>
+                <img
+                  src={c.image}
+                  alt={c.color}
+                  className="w-14 h-13 object-cover mb-2 items-center"
+                />
+                <span className="text-xs text-gray-700 truncate">{c.color}</span>
                 <span className="text-sm text-gray-900 font-medium mt-1">$ {int}</span>
                 <span className="text-[11px] text-gray-500">
                   {c.stock > 0 ? 'Disponible' : 'Sin stock'}
