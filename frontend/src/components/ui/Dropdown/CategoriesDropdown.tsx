@@ -47,6 +47,7 @@ export default function CategoriesDropdown() {
     >
       {/* Trigger */}
       <button
+        data-testid="categories-trigger"
         type="button"
         className="inline-flex w-auto h-7 items-end hover:text-ml-blue-dark transition-colors"
         aria-haspopup="menu"
@@ -59,6 +60,7 @@ export default function CategoriesDropdown() {
       {/* First level */}
       {open && (
         <ul
+          data-testid="categories-menu"
           role="menu"
           className="
             absolute left-0 w-56

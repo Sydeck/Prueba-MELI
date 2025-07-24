@@ -24,6 +24,7 @@ export default function AlphabetFilter({ letters, onSelect }: Props): JSX.Elemen
         {letters.map((l, i) => (
           <button
             key={l}
+            aria-label={l}
             type="button"
             onClick={() => onSelect?.(l)}
             className="px-1 hover:text-ml-blue-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-ml-blue-main"

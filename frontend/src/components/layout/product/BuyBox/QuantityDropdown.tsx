@@ -31,21 +31,31 @@ export default function QuantityDropdown({ qty, setQty, stock, maxQty }: Quantit
     setOpen(false);
   };
 
+  const isDisabled = safeStock === 0 || options.length === 0;
+
   return (
     <div className="space-y-2">
       <div ref={ref} className="relative inline-block w-full">
         <button
           type="button"
+          data-testid="qty-toggle"
           aria-haspopup="listbox"
           aria-expanded={open}
-          onClick={() => setOpen(o => !o)}
-          className="flex items-center justify-between w-full h-9 px-3 border lg:border-none rounded text-sm bg-white hover:border-ml-blue-main focus:outline-none focus:ring-2 focus:ring-ml-blue-main"
+          aria-controls="qty-options"
+          onClick={() => !isDisabled && setOpen(o => !o)}
+          disabled={isDisabled}
+          className={clsx(
+            'flex items-center justify-between w-full h-9 px-3 border lg:border-none rounded text-sm bg-white',
+            'hover:border-ml-blue-main focus:outline-none focus:ring-2 focus:ring-ml-blue-main',
+            isDisabled && 'cursor-not-allowed opacity-50'
+          )}
         >
           <span className="text-sm text-gray-700">
-            Cantidad: {qty} {/* Ahora siempre muestra la cantidad actualizada */}
+            {isDisabled ? 'Sin stock disponible' : `Cantidad: ${qty}`}
           </span>
-          <span className="text-xs text-gray-500">({safeStock} disponibles)</span>
+          {!isDisabled && <span className="text-xs text-gray-500">({safeStock} disponibles)</span>}
           <svg
+            aria-hidden="true"
             className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`}
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -56,6 +66,7 @@ export default function QuantityDropdown({ qty, setQty, stock, maxQty }: Quantit
 
         {open && (
           <ul
+            id="qty-options"
             role="listbox"
             tabIndex={-1}
             className="absolute z-20 mt-1 w-full lg:w-2/5 max-h-56 overflow-auto border rounded bg-white shadow-lg text-sm focus:outline-none"
@@ -63,6 +74,7 @@ export default function QuantityDropdown({ qty, setQty, stock, maxQty }: Quantit
             {options.map(n => (
               <li key={n}>
                 <button
+                  data-testid={`qty-option-${n}`}
                   role="option"
                   aria-selected={qty === n}
                   onClick={() => handleSelect(n)}

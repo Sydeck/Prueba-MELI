@@ -11,11 +11,23 @@ interface BuyBoxProps {
   setQty: (n: number) => void;
   maxQty: number;
   seller: Seller;
+  buyLabel?: string;
+  addToCartLabel?: string;
 }
 
-export default function BuyBox({ seller, stock, qty, setQty, maxQty }: BuyBoxProps) {
+export default function BuyBox({
+  seller,
+  stock,
+  qty,
+  setQty,
+  maxQty,
+  buyLabel = 'Comprar ahora',
+  addToCartLabel = 'Agregar al carrito',
+}: BuyBoxProps) {
+  const isOutOfStock = stock <= 0;
+
   return (
-    <div id="buy-box" className="lg:top-24">
+    <div id="buy-box" className="lg:top-24" data-testid="buy-box">
       <div className="bg-white p-4 rounded-md shadow-md space-y-4">
         <DeliveryInfo stock={stock} />
 
@@ -23,11 +35,19 @@ export default function BuyBox({ seller, stock, qty, setQty, maxQty }: BuyBoxPro
 
         {/* Botones compra */}
         <div className="space-y-2">
-          <button className="w-full h-11 bg-ml-blue-main text-white rounded-md hover:bg-ml-blue-dark">
-            Comprar ahora
+          <button
+            className="w-full h-11 bg-ml-blue-main text-white rounded-md hover:bg-ml-blue-dark disabled:opacity-50"
+            aria-label={buyLabel}
+            disabled={isOutOfStock}
+          >
+            {buyLabel}
           </button>
-          <button className="w-full h-11 bg-[#4189E633] text-ml-blue-main rounded-md hover:bg-[#4189E650]">
-            Agregar al carrito
+          <button
+            className="w-full h-11 bg-[#4189E633] text-ml-blue-main rounded-md hover:bg-[#4189E650] disabled:opacity-50"
+            aria-label={addToCartLabel}
+            disabled={isOutOfStock}
+          >
+            {addToCartLabel}
           </button>
         </div>
 

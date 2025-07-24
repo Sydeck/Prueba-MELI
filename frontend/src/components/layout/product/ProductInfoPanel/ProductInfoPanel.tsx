@@ -31,8 +31,8 @@ export interface ProductInfoPanelProps {
   specsAnchorId?: string;
   onShare?: () => void;
   className?: string;
-  activeColor: number; // manejado por el padre
-  onColorSelect: (index: number) => void; // manejado por el padre
+  activeColor: number;
+  onColorSelect: (index: number) => void;
 }
 
 export default function ProductInfoPanel({
@@ -64,8 +64,19 @@ export default function ProductInfoPanel({
     [specsAnchorId]
   );
 
+  const safeShare = useCallback(() => {
+    try {
+      onShare?.() ?? navigator.share?.({ url: window.location.href });
+    } catch {
+      console.warn('Share not supported');
+    }
+  }, [onShare]);
+
   return (
-    <div className={clsx('pl-4 pt-4 lg:space-y-2 lg:pl-0', className)}>
+    <div
+      className={clsx('pl-4 pt-4 lg:space-y-2 lg:pl-0', className)}
+      data-testid="product-info-panel"
+    >
       <BrandBadge logo={brandLogo} label={brandLinkLabel} />
       <ConditionSoldFav
         condition={condition}
@@ -75,6 +86,7 @@ export default function ProductInfoPanel({
         className="hidden lg:flex mt-0 mb-0"
       />
 
+      {/* Mobile header */}
       <div className="flex items-center justify-between lg:hidden mt-4 mb-2">
         <ConditionSoldFav
           condition={condition}
@@ -86,31 +98,33 @@ export default function ProductInfoPanel({
         />
         <RatingStars value={rating} reviews={reviews} size="sm" className="flex-shrink-0 mr-4" />
       </div>
-      {/* Título */}
+
+      {/* Title */}
       <h1
-        className="
-          text-[#000000E6] text-[16px] leading-[26px] font-normal break-words text-pretty
-          lg:text-[22px] lg:leading-[26px] lg:font-semibold
-        "
+        data-testid="product-title"
+        className="text-[#000000E6] text-[16px] leading-[26px] font-normal break-words text-pretty lg:text-[22px] lg:leading-[26px] lg:font-semibold"
       >
         {title}
       </h1>
-      {/* Carrusel + colores (mobile) */}
-      <div className="lg:hidden space-y-2 mb-8">
+
+      {/* Mobile carousel */}
+      <div data-testid="mobile-carousel-section" className="lg:hidden space-y-2 mb-8">
         <ImageCarousel
           images={colors.length > 0 ? colors[activeColor]?.images ?? [] : []}
           fav={fav}
           onToggleFav={toggleFav}
-          onShare={onShare ?? (() => navigator.share?.({ url: window.location.href }))}
+          onShare={safeShare}
         />
 
         {colors.length > 0 && (
           <ColorCardsMobile colors={colors} activeColor={activeColor} onSelect={onColorSelect} />
         )}
       </div>
-      {/* Rating desktop */}
+
+      {/* Desktop rating */}
       <RatingStars value={rating} reviews={reviews} size="md" className="hidden lg:flex" />
-      {/* Precios */}
+
+      {/* Prices */}
       <PricesBlock
         oldPrice={oldPrice}
         price={price}
@@ -119,9 +133,11 @@ export default function ProductInfoPanel({
         installments={installments}
         ivaText={ivaText}
       />
-      {/* Colores desktop */}
+
+      {/* Desktop colors */}
       <ColorThumbsDesktop colors={colors} activeColor={activeColor} onSelect={onColorSelect} />
-      {/* Facts + ver características (desktop) */}
+
+      {/* Facts */}
       <FactsBlock facts={facts} onGoToSpecs={goToSpecs} />
     </div>
   );

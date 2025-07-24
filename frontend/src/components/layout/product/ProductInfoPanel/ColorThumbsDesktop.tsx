@@ -22,9 +22,12 @@ export default function ColorThumbsDesktop({ colors = [], activeColor, onSelect 
         {colors.map((c, idx) => (
           <button
             key={c.id}
+            type="button"
+            aria-label={`Seleccionar color ${c.color}`}
+            data-testid={`desktop-color-${idx}`}
             className={clsx(
               'w-12 h-12 border rounded overflow-hidden focus:ring-1 focus:ring-ml-blue-main',
-              idx === activeColor && 'border-1 border-ml-blue-main'
+              idx === activeColor && 'border-2 border-ml-blue-main'
             )}
             onClick={() => onSelect(idx)}
           >

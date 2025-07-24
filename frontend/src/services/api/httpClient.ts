@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
-import { ApiConfig } from './ApiConfig';
+import { ApiConfig } from './apiConfig';
 import Error from 'next/error';
 
 /**
@@ -48,9 +48,10 @@ export class AxiosHttpClient implements IHttpClient {
   private mapAxiosError(error: AxiosError): globalThis.Error {
     if (error.response) {
       const { status, data } = error.response;
-      return new globalThis.Error(
-        `HTTP ${status}: ${data as any}?.error?.message || error.message`
-      );
+      // Intentamos extraer el mensaje correctamente
+      const serverMessage =
+        (data as any)?.error?.message || (data as any)?.message || error.message;
+      return new globalThis.Error(`HTTP ${status}: ${serverMessage}`);
     } else if (error.request) {
       return new globalThis.Error('No response received from the server');
     } else {
@@ -66,7 +67,7 @@ export class AxiosHttpClient implements IHttpClient {
       return response.data;
     } catch (error) {
       console.error(`Get request failed: ${endpoint}`, error);
-      throw error;
+      throw this.mapAxiosError(error as any);
     }
   }
 
@@ -79,7 +80,7 @@ export class AxiosHttpClient implements IHttpClient {
       return response.data;
     } catch (error) {
       console.error(`Post request failed: ${endpoint}`, error);
-      throw error;
+      throw this.mapAxiosError(error as any);
     }
   }
 
@@ -92,7 +93,7 @@ export class AxiosHttpClient implements IHttpClient {
       return response.data;
     } catch (error) {
       console.error(`Put request failed: ${endpoint}`, error);
-      throw error;
+      throw this.mapAxiosError(error as any);
     }
   }
 
@@ -105,7 +106,7 @@ export class AxiosHttpClient implements IHttpClient {
       return response.data;
     } catch (error) {
       console.error(`Delete request failed: ${endpoint}`, error);
-      throw error;
+      throw this.mapAxiosError(error as any);
     }
   }
 }

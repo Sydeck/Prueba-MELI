@@ -6,11 +6,9 @@ import { FeaturedBlock } from '@/types/footer.data';
 
 interface FeaturedPhonesProps {
   blocks: FeaturedBlock[];
+  title?: string;
 }
 
-/**
- * Single featured block column (desktop) or accordion section (mobile)
- */
 function FeaturedColumn({
   block,
   index,
@@ -30,12 +28,13 @@ function FeaturedColumn({
         'divide-y divide-gray-200 lg:divide-y-0',
         index !== 0 && 'lg:border-l lg:border-gray-200 lg:pl-6'
       )}
+      data-testid={`featured-column-${index}`}
     >
-      {/* Mobile trigger. Desktop is static */}
       <button
         type="button"
         aria-expanded={isOpen}
         aria-controls={`feat-list-${index}`}
+        data-testid={`featured-toggle-${index}`}
         className={clsx(
           'w-full flex justify-between items-center py-3 px-4 lg:px-0 lg:py-0',
           'lg:cursor-default lg:hover:text-inherit',
@@ -52,9 +51,9 @@ function FeaturedColumn({
         />
       </button>
 
-      {/* Items list */}
       <ul
         id={`feat-list-${index}`}
+        data-testid={`featured-list-${index}`}
         className={clsx(
           'bg-[#f5f5f5] px-5 py-3 text-sm text-gray-600 space-y-2',
           'lg:bg-transparent lg:px-0 lg:py-2 lg:space-y-1',
@@ -67,10 +66,14 @@ function FeaturedColumn({
             {item}
           </li>
         ))}
-
         {block.moreLabel && (
           <li className="mt-1">
-            <button className="text-ml-blue-main text-xs hover:underline">{block.moreLabel}</button>
+            <button
+              className="text-ml-blue-main text-xs hover:underline"
+              aria-label={`Ver más sobre ${block.title}`}
+            >
+              {block.moreLabel}
+            </button>
           </li>
         )}
       </ul>
@@ -78,19 +81,16 @@ function FeaturedColumn({
   );
 }
 
-/**
- * FeaturedPhones wrapper: responsibility = render “Destacado en Celulares y Telefonía” block
- */
-export default function FeaturedPhones({ blocks }: FeaturedPhonesProps): JSX.Element {
+export default function FeaturedPhones({
+  blocks,
+  title = 'Destacado en Celulares y Telefonía',
+}: FeaturedPhonesProps): JSX.Element {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
-    <section className=" w-full max-w-screen-xl  mx-auto">
+    <section className="w-full max-w-screen-xl mx-auto" data-testid="featured-phones">
       <div className="bg-white rounded-md m-4 p-6 lg:m-8 lg:p-4 lg:mb-4 space-y-3">
-        <h2 className="text-base font-medium text-gray-900 lg:text-lg">
-          Destacado en Celulares y Telefonía
-        </h2>
-
+        <h2 className="text-base font-medium text-gray-900 lg:text-lg">{title}</h2>
         <div
           className={clsx(
             'border rounded-md lg:border-0 lg:rounded-none',

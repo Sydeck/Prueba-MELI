@@ -7,6 +7,7 @@ export default function SearchInput(): JSX.Element {
       <input
         type="text"
         placeholder="Buscar productos, marcas y más..."
+        aria-label="Buscar productos"
         className="
           w-full h-full
           rounded-sm
