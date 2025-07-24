@@ -1,23 +1,21 @@
-import express from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import { ProductController } from '../adapters/inbound/http/ProductController';
 import { ErrorHandler } from '../middleware/ErrorHandler';
 import { GetProductDetailsUseCase } from '@application/use-cases/GetProductDetailsUseCase';
 import { InMemoryProductRepository } from '../adapters/outbound/persistence/InMemoryProductRepository';
 
-/**
- * Express application configuration and dependency injection
- */
-
 export class ExpressApp {
-  private readonly app: express.Application;
+  public readonly app: Application; // <- Ahora pública
   private readonly productController: ProductController;
 
-  constructor() {
+  constructor(useCase?: GetProductDetailsUseCase) {
     this.app = express();
 
-    const products = new InMemoryProductRepository();
-    const getProductDetailsUseCase = new GetProductDetailsUseCase(products);
+    // Inyección opcional para testing
+    const getProductDetailsUseCase =
+      useCase ?? new GetProductDetailsUseCase(new InMemoryProductRepository());
+
     this.productController = new ProductController(getProductDetailsUseCase);
 
     this.setUpMiddleware();
@@ -29,6 +27,7 @@ export class ExpressApp {
     this.app.use(cors());
     this.app.use(express.json());
   }
+
   private setUpRoutes(): void {
     this.app.get('/health', (req, res) => {
       res.json({
@@ -40,11 +39,12 @@ export class ExpressApp {
 
     this.app.get('/api/v1/products/:id', this.productController.getProductDetails);
   }
-  private setUpErrorHandler() {
+
+  private setUpErrorHandler(): void {
     this.app.use(ErrorHandler.handle);
   }
 
-  public getApp() {
-    return this.app;
+  listen(port: number): void {
+    this.app.listen(port, () => console.log(`Server running on port ${port}`));
   }
 }
