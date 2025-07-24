@@ -2,12 +2,20 @@ import React from 'react';
 import { BadgeCheck } from 'lucide-react';
 
 interface SellerCardProps {
+  image: string;
+  sellerName: string;
   stock: number;
   mobileOnly?: boolean;
   desktopOnly?: boolean;
 }
 
-export default function SellerCard({ stock, mobileOnly, desktopOnly }: SellerCardProps) {
+export default function SellerCard({
+  image,
+  sellerName,
+  stock,
+  mobileOnly,
+  desktopOnly,
+}: SellerCardProps) {
   return (
     <div
       id="seller-info"
@@ -16,11 +24,7 @@ export default function SellerCard({ stock, mobileOnly, desktopOnly }: SellerCar
       }`}
     >
       <div className="flex items-start gap-3">
-        <img
-          src="/images/logos/nothing_tech_logo.webp"
-          alt="NOTHING TECH"
-          className="w-10 h-10 object-contain rounded-md"
-        />
+        <img src={image} alt={sellerName} className="w-10 h-10 object-contain rounded-md" />
 
         <div className="flex flex-col gap-1">
           <p className="flex items-center text-sm text-gray-700">

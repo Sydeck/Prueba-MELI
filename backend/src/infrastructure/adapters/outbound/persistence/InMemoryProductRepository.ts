@@ -34,14 +34,20 @@ export class InMemoryProductRepository implements ProductRepository {
   }
 
   private seedFakeData(): void {
-    // Samsung Galaxy A54
+    /** Samsung Galaxy A54 */
+    const samsungImages = [
+      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_828877-MLU54983902171_052023-F.webp'),
+      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_929123-MLU80276924341_102024-F.webp'),
+      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_812038-MLA74676703594_022024-F.webp'),
+      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_929123-MLU80276924341_102024-F.webp'),
+    ];
     const samsungSeller = new Seller(
       new SellerId('12345'),
       new SellerName('Samsung'),
       new SellerStatus('TIENDA_OFICIAL'),
       new SellerMetrics(1000, 50000),
       new SellerReputation(4.8),
-      'https://upload.wikimedia.org/samsung_logo.png'
+      'https://http2.mlstatic.com/D_NQ_NP_988300-MLA81040243606_122024-T.webp'
     );
 
     const galaxyProduct = new Product(
@@ -49,10 +55,7 @@ export class InMemoryProductRepository implements ProductRepository {
       new ProductTitle('Samsung Galaxy A54 5G 256 GB'),
       new ProductDescription('Latest smartphone with advanced features and 5G connectivity'),
       new Money(439.99, 'USD', 12),
-      [
-        new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_123456-MLA.webp'),
-        new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_654321-MLA.webp'),
-      ],
+      samsungImages,
       samsungSeller,
       new ShippingInfo(new Money(0, 'USD', 0), true, '2-3 días'),
       new Availability(15, true),
@@ -76,51 +79,50 @@ export class InMemoryProductRepository implements ProductRepository {
           color: 'Negro',
           storage: '256GB',
           price: 439.99,
-          image: 'https://http2.mlstatic.com/D_NQ_NP_2X_123456-MLA.webp',
+          images: samsungImages.map(img => new ProductImage(img.url)),
           stock: 10,
-        }),
-        new ProductVariant({
-          id: 'VAR124',
-          color: 'Blanco',
-          storage: '256GB',
-          price: 459.99,
-          image: 'https://http2.mlstatic.com/D_NQ_NP_2X_654321-MLA.webp',
-          stock: 5,
         }),
       ]
     );
 
-    // Nothing Phone
+    /** Nothing Phone */
+    const nothingImages = [
+      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_676234-MLA85338913814_062025-F.webp'),
+      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_790769-MLA85340775002_062025-F.webp'),
+    ];
     const nothingSeller = new Seller(
       new SellerId('67890'),
       new SellerName('NOTHING TECH'),
       new SellerStatus('TIENDA_OFICIAL'),
       new SellerMetrics(50, 50000),
       new SellerReputation(4.5),
-      'https://upload.wikimedia.org/nothing_logo.png'
+      'https://http2.mlstatic.com/D_NQ_NP_988300-MLA81040243606_122024-T.webp'
     );
 
     const nothingProduct = new Product(
       new ProductId('MLA987654321'),
       new ProductTitle('Nothing Phone 3A Pro 12GB RAM 256GB ROM'),
-      new ProductDescription('Revolutionary smartphone with unique transparent design'),
+      new ProductDescription(
+        'El Nothing Phone (3a) Pro redefine el diseño de los smartphones con su icónico cuerpo transparente...'
+      ),
       new Money(599.99, 'USD', 15),
-      [
-        new ProductImage(
-          'https://http2.mlstatic.com/D_NQ_NP_2X_676234-MLA85338913814_062025-F.webp'
-        ),
-      ],
+      nothingImages,
       nothingSeller,
       new ShippingInfo(new Money(25, 'USD', 0), false, '3-5 días'),
       new Availability(8, true),
       new ProductCondition('Nuevo'),
-      new ProductRating(4.4),
-      800,
-      ['Diseño transparente', 'Carga rápida 65W', 'Pantalla AMOLED de 120Hz'],
+      new ProductRating(4.7),
+      125,
       [
-        new ProductSpecs({ label: 'RAM', value: '12 GB' }),
+        'Diseño transparente con interfaz Glyph',
+        'Procesador Snapdragon 7s Gen 3',
+        'Pantalla AMOLED de 6.77"',
+      ],
+      [
+        new ProductSpecs({ label: 'Marca', value: 'Nothing' }),
+        new ProductSpecs({ label: 'Modelo', value: 'Phone (3a) Pro' }),
+        new ProductSpecs({ label: 'Memoria RAM', value: '12 GB' }),
         new ProductSpecs({ label: 'Almacenamiento', value: '256 GB' }),
-        new ProductSpecs({ label: 'Color', value: 'Negro Transparente' }),
       ],
       [
         new ProductVariant({
@@ -128,21 +130,24 @@ export class InMemoryProductRepository implements ProductRepository {
           color: 'Negro',
           storage: '256GB',
           price: 599.99,
-          image: 'https://http2.mlstatic.com/D_NQ_NP_2X_676234-MLA85338913814_062025-F.webp',
+          images: nothingImages.map(img => new ProductImage(img.url)),
           stock: 8,
         }),
         new ProductVariant({
-          id: 'VAR200',
-          color: 'GRIS',
+          id: 'VAR201',
+          color: 'Gris',
           storage: '256GB',
-          price: 799.99,
-          image: 'https://http2.mlstatic.com/D_NQ_NP_2X_790769-MLA85340775002_062025-F.webp',
-          stock: 8,
+          price: 599.99,
+          images: nothingImages.map(img => new ProductImage(img.url)),
+          stock: 5,
         }),
       ]
     );
 
-    // iPhone 15
+    /** iPhone 15 */
+    const iphoneImages = [
+      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_912227-MLA71782903150_092023-F.webp'),
+    ];
     const appleSeller = new Seller(
       new SellerId('99999'),
       new SellerName('Apple Store'),
@@ -157,7 +162,7 @@ export class InMemoryProductRepository implements ProductRepository {
       new ProductTitle('iPhone 15 Pro Max 256GB'),
       new ProductDescription('Latest iPhone with titanium design and advanced camera system'),
       new Money(1199.99, 'USD', 5),
-      [new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_555666-MLA.webp')],
+      iphoneImages,
       appleSeller,
       new ShippingInfo(new Money(0, 'USD', 0), true, '1-2 días'),
       new Availability(25, true),
@@ -176,7 +181,7 @@ export class InMemoryProductRepository implements ProductRepository {
           color: 'Titanio Azul',
           storage: '256GB',
           price: 1199.99,
-          image: 'https://http2.mlstatic.com/D_NQ_NP_2X_555666-MLA.webp',
+          images: iphoneImages.map(img => new ProductImage(img.url)),
           stock: 25,
         }),
       ]

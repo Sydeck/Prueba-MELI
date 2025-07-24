@@ -3,15 +3,17 @@ import QuantityDropdown from './QuantityDropdown';
 import DeliveryInfo from './DeliveryInfo';
 import Guarantees from './Guarantees';
 import SellerCard from './SellerCard';
+import { Seller } from '@/types/product.types';
 
 interface BuyBoxProps {
   stock: number;
   qty: number;
   setQty: (n: number) => void;
   maxQty: number;
+  seller: Seller;
 }
 
-export default function BuyBox({ stock, qty, setQty, maxQty }: BuyBoxProps) {
+export default function BuyBox({ seller, stock, qty, setQty, maxQty }: BuyBoxProps) {
   return (
     <div id="buy-box" className="lg:top-24">
       <div className="bg-white p-4 rounded-md shadow-md space-y-4">
@@ -30,7 +32,7 @@ export default function BuyBox({ stock, qty, setQty, maxQty }: BuyBoxProps) {
         </div>
 
         {/* Seller mobile */}
-        <SellerCard stock={stock} mobileOnly />
+        <SellerCard image={seller.brandLogo} sellerName={seller.name} stock={stock} mobileOnly />
 
         <Guarantees />
       </div>

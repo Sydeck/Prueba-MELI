@@ -1,12 +1,13 @@
 import { AbstractValueObject } from './AbstractValueObjects';
 import { ValidationException } from '../exceptions';
+import { ProductImage } from './ProductImage';
 
 export class ProductVariant extends AbstractValueObject<{
   id: string;
   color: string;
   storage: string;
   price: number;
-  image: string;
+  images: ProductImage[];
   stock: number;
 }> {
   protected validate(value: {
@@ -14,43 +15,29 @@ export class ProductVariant extends AbstractValueObject<{
     color: string;
     storage: string;
     price: number;
-    image: string;
+    images: ProductImage[];
     stock: number;
   }): void {
-    if (!value.id) throw new ValidationException('Variant ID is required', 'INVALID_VARIANT_ID');
-    if (!value.color)
-      throw new ValidationException('Variant color is required', 'INVALID_VARIANT_COLOR');
-    if (!value.storage)
-      throw new ValidationException('Variant storage is required', 'INVALID_VARIANT_STORAGE');
-    if (value.price <= 0)
-      throw new ValidationException('Variant price must be positive', 'INVALID_VARIANT_PRICE');
-    if (!value.image)
-      throw new ValidationException('Variant image is required', 'INVALID_VARIANT_IMAGE');
-    if (value.stock < 0)
-      throw new ValidationException('Variant stock cannot be negative', 'INVALID_VARIANT_STOCK');
-  }
+    if (!value.id || !value.color || !value.storage) {
+      throw new ValidationException('Invalid product variant', 'INVALID_PRODUCT_VARIANT');
+    }
 
-  get variantId(): string {
-    return this._value.id;
-  }
+    if (!Array.isArray(value.images) || value.images.length === 0) {
+      throw new ValidationException(
+        'Product variant must have at least one image',
+        'INVALID_IMAGES'
+      );
+    }
 
-  get variantColor(): string {
-    return this._value.color;
-  }
+    if (!value.images.every(img => img instanceof ProductImage)) {
+      throw new ValidationException(
+        'Each image must be a ProductImage instance',
+        'INVALID_IMAGE_TYPE'
+      );
+    }
 
-  get variantStorage(): string {
-    return this._value.storage;
-  }
-
-  get variantPrice(): number {
-    return this._value.price;
-  }
-
-  get variantImage(): string {
-    return this._value.image;
-  }
-
-  get variantStock(): number {
-    return this._value.stock;
+    if (value.price <= 0 || value.stock < 0) {
+      throw new ValidationException('Invalid price or stock for variant', 'INVALID_VARIANT_DATA');
+    }
   }
 }

@@ -20,8 +20,8 @@ export default function ProductPageShell({ productId }: Props): JSX.Element {
   const { data, isPending: loading, error } = useProductDetails(productId);
 
   // Inicializamos el hook SIEMPRE con valores seguros
-  const { qty, setQty } = useQuantity(1, 1);
 
+  const [qty, setQty] = useState(1);
   // Estado para el color activo
   const [activeColor, setActiveColor] = useState(0);
 
@@ -75,7 +75,7 @@ export default function ProductPageShell({ productId }: Props): JSX.Element {
               <div id="product-gallery">
                 <div className="hidden lg:block h-[480px] rounded-md shadow-sm">
                   <ProductGallery
-                    images={[product.variants[activeColor]?.image || product.images[0]]}
+                    images={product.images}
                     width={380}
                     height={450}
                     zoomContainerWidth={700}
@@ -109,7 +109,7 @@ export default function ProductPageShell({ productId }: Props): JSX.Element {
 
             {/* Descripción y Specs */}
             <div className="hidden lg:block">
-              <ProductDescription text={product.description} collapsedLines={100} />
+              <ProductDescription text={product.description} />
               <SpecsTable specs={product.specs} />
             </div>
           </section>
@@ -119,8 +119,19 @@ export default function ProductPageShell({ productId }: Props): JSX.Element {
             id="right-column"
             className={clsx('mt-6 space-y-4', 'lg:mt-0 lg:space-y-6 lg:pl-0')}
           >
-            <BuyBox stock={availability.stock} qty={qty} setQty={setQty} maxQty={maxQty} />
-            <SellerCard stock={availability.stock} desktopOnly />
+            <BuyBox
+              seller={seller}
+              stock={availability.stock}
+              qty={qty}
+              setQty={setQty}
+              maxQty={maxQty}
+            />
+            <SellerCard
+              image={seller.brandLogo}
+              sellerName={seller.name}
+              stock={availability.stock}
+              desktopOnly
+            />
           </aside>
 
           {/* Mobile: Descripción y Specs */}

@@ -19,7 +19,7 @@ export interface ProductVariant {
   color: string;
   storage: string;
   price: number;
-  image: string;
+  images: string[];
   stock: number;
 }
 

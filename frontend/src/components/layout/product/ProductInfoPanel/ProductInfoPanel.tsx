@@ -98,7 +98,7 @@ export default function ProductInfoPanel({
       {/* Carrusel + colores (mobile) */}
       <div className="lg:hidden space-y-2 mb-8">
         <ImageCarousel
-          images={colors.length > 0 ? [colors[activeColor]?.image] : []}
+          images={colors.length > 0 ? colors[activeColor]?.images ?? [] : []}
           fav={fav}
           onToggleFav={toggleFav}
           onShare={onShare ?? (() => navigator.share?.({ url: window.location.href }))}

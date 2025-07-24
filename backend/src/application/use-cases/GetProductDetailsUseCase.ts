@@ -67,12 +67,12 @@ export class GetProductDetailsUseCase implements GetProductDetailsPort {
           value: spec.specValue,
         })),
         variants: product.variants.map(variant => ({
-          id: variant.variantId,
-          color: variant.variantColor,
-          storage: variant.variantStorage,
-          price: variant.variantPrice,
-          image: variant.variantImage,
-          stock: variant.variantStock,
+          id: variant.value.id,
+          color: variant.value.color,
+          storage: variant.value.storage,
+          price: variant.value.price,
+          images: variant.value.images.map(img => img.url),
+          stock: variant.value.stock,
         })),
       },
       seller: {
