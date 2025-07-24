@@ -10,7 +10,7 @@ export default function TestPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <ProductPageShell productId="MLA123456789" />
+      <ProductPageShell productId="MLA987654321" />
       <Footer />
     </div>
   );

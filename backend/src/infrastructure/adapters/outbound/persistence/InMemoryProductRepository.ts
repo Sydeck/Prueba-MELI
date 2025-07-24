@@ -105,7 +105,11 @@ export class InMemoryProductRepository implements ProductRepository {
       new ProductTitle('Nothing Phone 3A Pro 12GB RAM 256GB ROM'),
       new ProductDescription('Revolutionary smartphone with unique transparent design'),
       new Money(599.99, 'USD', 15),
-      [new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_987654-MLA.webp')],
+      [
+        new ProductImage(
+          'https://http2.mlstatic.com/D_NQ_NP_2X_676234-MLA85338913814_062025-F.webp'
+        ),
+      ],
       nothingSeller,
       new ShippingInfo(new Money(25, 'USD', 0), false, '3-5 días'),
       new Availability(8, true),
@@ -121,10 +125,18 @@ export class InMemoryProductRepository implements ProductRepository {
       [
         new ProductVariant({
           id: 'VAR200',
-          color: 'Negro Transparente',
+          color: 'Negro',
           storage: '256GB',
           price: 599.99,
-          image: 'https://http2.mlstatic.com/D_NQ_NP_2X_987654-MLA.webp',
+          image: 'https://http2.mlstatic.com/D_NQ_NP_2X_676234-MLA85338913814_062025-F.webp',
+          stock: 8,
+        }),
+        new ProductVariant({
+          id: 'VAR200',
+          color: 'GRIS',
+          storage: '256GB',
+          price: 799.99,
+          image: 'https://http2.mlstatic.com/D_NQ_NP_2X_790769-MLA85340775002_062025-F.webp',
           stock: 8,
         }),
       ]
