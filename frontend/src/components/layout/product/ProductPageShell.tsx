@@ -14,14 +14,19 @@ import { useProductDetails } from '@/hooks/useProductDetails';
 export default function ProductPageShell({ productId }: { productId: string }): JSX.Element {
   const { product, loading, error } = useProductDetails(productId);
 
+  // Valores seguros por defecto para evitar error de hooks
+  const stock = product?.availability?.stock ?? 1;
+  const maxQty = Math.min(stock, 10);
+
+  // El hook siempre se ejecuta, incluso si el producto aún no está
+  const { qty, setQty } = useQuantity(1, maxQty);
+
   if (loading) return <div className="p-4">Cargando producto...</div>;
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
   if (!product) return <div className="p-4">Producto no encontrado</div>;
 
   const prod = product.product;
   const seller = product.seller;
-  const maxQty = Math.min(product.availability.stock, 10);
-  const { qty, setQty } = useQuantity(1, maxQty);
 
   return (
     <main className="w-full bg-[#EDEDED]">
@@ -99,8 +104,8 @@ export default function ProductPageShell({ productId }: { productId: string }): 
             id="right-column"
             className={clsx('mt-6 space-y-4', 'lg:mt-0 lg:space-y-6 lg:pl-0')}
           >
-            <BuyBox stock={product.availability.stock} qty={qty} setQty={setQty} maxQty={maxQty} />
-            <SellerCard stock={product.availability.stock} desktopOnly />
+            <BuyBox stock={stock} qty={qty} setQty={setQty} maxQty={maxQty} />
+            <SellerCard stock={stock} desktopOnly />
           </aside>
 
           <div className="block lg:hidden">
