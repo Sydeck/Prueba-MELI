@@ -1,4 +1,4 @@
-import { Product } from '@/types/product.types';
+import { ProductDetailsDto } from '@/types/product.types';
 import { HealthCheckResponse } from '@/types/api.types';
 import { ServiceFactory, productRepository } from './factories/ServiceFactory';
 import { ErrorHandler } from './errors/ErrorHandler';
@@ -7,9 +7,10 @@ export class ApiService {
   /**
    * Get a product by its ID
    */
-  static async getProductById(productId: string): Promise<Product> {
+  static async getProductById(productId: string): Promise<ProductDetailsDto> {
     try {
       const product = await productRepository.getById(productId);
+      console.log('product', product);
       return product;
     } catch (error) {
       throw ErrorHandler.handleProductError(error);

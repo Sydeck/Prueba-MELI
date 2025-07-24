@@ -16,6 +16,7 @@ export class Money {
     private readonly _discount: number
   ) {
     this.validateAmount(_amount);
+    this.validateCurrency(_currency);
     this.validateDiscount(_discount);
   }
 
@@ -82,6 +83,16 @@ export class Money {
   private validateDiscount(discount: number): void {
     if (discount < 0 || discount > 100) {
       throw new ValidationException('Discount must be between 0 and 100', 'INVALID_MONEY_DISCOUNT');
+    }
+  }
+
+  /**
+   * Validate currency
+   */
+  private validateCurrency(currency: string): void {
+    const validCurrencies: Currency[] = ['MXN', 'USD', 'ARS', 'BRL', 'CLP', 'COL'];
+    if (!validCurrencies.includes(currency as Currency)) {
+      throw new ValidationException('Invalid currency', 'INVALID_MONEY_CURRENCY');
     }
   }
 

@@ -9,12 +9,12 @@ interface Props {
   fav: boolean;
   onToggleFav: () => void;
   className?: string;
-  hideHeart?: boolean; // <--- NUEVO
+  hideHeart?: boolean;
 }
 
 export default function ConditionSoldFav({
   condition,
-  soldQty,
+  soldQty = 0,
   fav,
   onToggleFav,
   className,
@@ -34,9 +34,14 @@ export default function ConditionSoldFav({
 
       {!hideHeart && (
         <button
+          type="button"
           aria-label={fav ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+          data-testid="fav-button"
           onClick={onToggleFav}
-          className="hidden lg:block ml-auto p-1 text-ml-blue-main transition-colors"
+          className={clsx(
+            'hidden lg:block ml-auto p-1 transition-colors',
+            fav ? 'text-ml-blue-dark' : 'text-ml-blue-main'
+          )}
         >
           <Heart
             className="w-6 h-6 mr-2"

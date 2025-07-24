@@ -1,11 +1,11 @@
-import { Product } from './product.types';
+import { ProductDetailsDto } from './product.types';
 
 /**
  * Response interface for backend
  */
 export interface GetProductDetailsResponse {
   success: boolean;
-  data: Product | null;
+  data: ProductDetailsDto | null;
 }
 
 export interface ApiSuccessWrapper {

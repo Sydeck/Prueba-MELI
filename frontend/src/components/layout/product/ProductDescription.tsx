@@ -5,7 +5,8 @@ interface DescriptionBlockProps {
   id?: string;
   title?: string;
   text: string;
-  collapsedLines?: number;
+  collapsedLinesMobile?: number;
+  collapsedLinesDesktop?: number;
   className?: string;
 }
 
@@ -13,18 +14,30 @@ export default function ProductDescription({
   id = 'product-description',
   title = 'Descripción',
   text,
-  collapsedLines = 260,
+  collapsedLinesMobile = 100, // px para mobile
+  collapsedLinesDesktop = 150, // px para desktop
   className,
 }: DescriptionBlockProps): JSX.Element {
   const [open, setOpen] = useState(false);
-  const boxRef = useRef<HTMLDivElement>(null);
   const [needsToggle, setNeedsToggle] = useState(false);
+  const [maxHeight, setMaxHeight] = useState(collapsedLinesMobile);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  // Detectar el alto real y decidir si necesitamos "Ver más"
+  const measureHeight = () => {
+    if (!boxRef.current) return;
+    const isDesktop = window.innerWidth >= 1024;
+    const collapsedHeight = isDesktop ? collapsedLinesDesktop : collapsedLinesMobile;
+    setMaxHeight(collapsedHeight);
+    const fullHeight = boxRef.current.scrollHeight;
+    setNeedsToggle(fullHeight > collapsedHeight);
+  };
 
   useEffect(() => {
-    const el = boxRef.current;
-    if (!el) return;
-    setNeedsToggle(el.scrollHeight > collapsedLines);
-  }, [text, collapsedLines]);
+    measureHeight();
+    window.addEventListener('resize', measureHeight);
+    return () => window.removeEventListener('resize', measureHeight);
+  }, [text]);
 
   return (
     <section id={id} className={clsx('bg-white p-4 rounded-md shadow-sm', className)}>
@@ -34,16 +47,10 @@ export default function ProductDescription({
         <div
           ref={boxRef}
           className={clsx(
-            'text-base text-gray-800  transition-all duration-300',
-            !open && 'max-h-[var(--collapsed-height)] overflow-hidden'
+            'text-base text-gray-800 transition-all duration-300',
+            !open && 'overflow-hidden'
           )}
-          style={
-            !open
-              ? ({
-                  ['--collapsed-height' as any]: `${collapsedLines}px lg:${collapsedLines}px`,
-                } as React.CSSProperties)
-              : undefined
-          }
+          style={!open ? { maxHeight: `${maxHeight}px` } : { maxHeight: 'none' }}
           dangerouslySetInnerHTML={{ __html: text.replace(/\n/g, '<br/>') }}
         />
         {!open && needsToggle && (
@@ -54,7 +61,7 @@ export default function ProductDescription({
       {needsToggle && (
         <button
           type="button"
-          onClick={() => setOpen(o => !o)}
+          onClick={() => setOpen(prev => !prev)}
           className="mt-4 text-ml-blue-main text-sm hover:underline"
         >
           {open ? 'Ver menos' : 'Ver más'}

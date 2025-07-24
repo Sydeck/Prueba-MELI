@@ -14,7 +14,8 @@ export class Seller {
     private readonly _name: SellerName,
     private readonly _status: SellerStatus,
     private readonly _metrics: SellerMetrics,
-    private readonly _reputation: SellerReputation
+    private readonly _reputation: SellerReputation,
+    private readonly _brandLogo: string
   ) {}
 
   /**
@@ -50,6 +51,10 @@ export class Seller {
    */
   get metrics(): SellerMetrics {
     return this._metrics;
+  }
+
+  get brandLogo(): string {
+    return this._brandLogo;
   }
 
   /**

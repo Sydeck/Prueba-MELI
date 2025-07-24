@@ -62,13 +62,13 @@ export default function ProductGallery({
                 idx === active ? 'border-ml-blue-main' : 'border-gray-300'
               } overflow-hidden rounded`}
             >
-              <img src={src} className="w-full h-full object-contain" />
+              <img src={src} className="w-full h-full object-cover" />
             </button>
           ))}
         </div>
 
         {/* ReactImageZoom preview */}
-        <div className="ml-4  cursor-pointer" onClick={() => setModalOpen(true)}>
+        <div className="ml-4 cursor-pointer" onClick={() => setModalOpen(true)}>
           <ReactImageZoom {...zoomProps} />
         </div>
       </div>
