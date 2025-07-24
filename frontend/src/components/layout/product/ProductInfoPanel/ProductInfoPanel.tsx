@@ -73,6 +73,7 @@ export default function ProductInfoPanel({
 
   return (
     <div className={clsx('pl-4 pt-4 lg:space-y-2 lg:pl-0', className)}>
+      <BrandBadge logo={brandLogo} label={brandLinkLabel} />
       <ConditionSoldFav
         condition={condition}
         soldQty={soldQty}
