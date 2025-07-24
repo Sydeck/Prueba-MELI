@@ -13,7 +13,7 @@ interface QuantityDropdownProps {
 export default function QuantityDropdown({ qty, setQty, stock, maxQty }: QuantityDropdownProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  useClickOutside(ref, () => setOpen(false));
+  useClickOutside(ref);
 
   const options = buildQtyOptions(stock);
 
