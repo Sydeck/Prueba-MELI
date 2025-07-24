@@ -1,0 +1,66 @@
+/* src/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos base para MercadoLibre */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Proxima Nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #EDEDED;
+  color: #0F1111;
+}
+
+/* Custom styles if needed */
+.ml-button-primary {
+  background-color: #3483FA;
+}
+
+.ml-button-primary:hover {
+  background-color: #2968C8;
+}
+.zoom-window {
+  position: absolute;       /* o fixed, según dónde quieras colocarlo */
+  width: 250px;
+  height: 250px;
+  border: 2px solid rgba(0,0,0,0.3);
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: 1000px 1000px; /* tamaño natural de tu imagen */
+  pointer-events: none;     /* que el mouse pase por encima de él */
+  z-index: 100;
+}
+.full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+/* Smooth accordion panel */
+.moreinfo-panel {
+  overflow: hidden;
+  max-height: 0;                /* start closed */
+  opacity: 0;
+  transition: max-height 380ms cubic-bezier(.22,1,.36,1), opacity 220ms ease;
+  will-change: max-height, opacity;
+}
+
+/* Inner content small fade/translate (optional) */
+.transition-content {
+  transition: opacity 220ms ease, transform 220ms ease;
+  opacity: 0;
+  transform: translateY(-4px);
+}
+.moreinfo-panel.open .transition-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
