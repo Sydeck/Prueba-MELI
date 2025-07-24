@@ -1,33 +1,30 @@
 {
-    "compilerOptions": {
-      "target": "ES2022",
-      "module": "commonjs",
-      "lib": ["ES2022"],
-      "outDir": "./dist",
-      "rootDir": "./src",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "resolveJsonModule": true,
-      "declaration": true,
-      "declarationMap": true,
-      "sourceMap": true,
-      "removeComments": true,
-      "noImplicitReturns": true,
-      "noFallthroughCasesInSwitch": true,
-      "noUncheckedIndexedAccess": true,
-      "noImplicitOverride": true,
-      "allowUnusedLabels": false,
-      "allowUnreachableCode": false,
-      "exactOptionalPropertyTypes": true,
-      "baseUrl": "./src",
-      "paths": {
-        "@domain/*": ["domain/*"],
-        "@application/*": ["application/*"],
-        "@infrastructure/*": ["infrastructure/*"]
-      }
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@domain/*": ["domain/*"],
+      "@application/*": ["application/*"],
+      "@infrastructure/*": ["infrastructure/*"]
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist", "tests"]
-  }
+    "types": ["node", "jest"]
+  },
+  "include": ["src/**/*", "tests/**/*"]
+}
