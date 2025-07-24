@@ -1,31 +1,16 @@
-import { useEffect, useState } from 'react';
+// src/hooks/useProductDetails.ts
+import { useQuery } from '@tanstack/react-query';
 import ApiService from '@/services/ApiService';
 import { ProductDetailsDto } from '@/types/product.types';
-import { mapProductDto } from '@/services/mappers/productMapper';
+import { mapProductDto } from '@/services/mappers/productMapper'; // Ajusta la ruta si es diferente
 
 export function useProductDetails(productId: string) {
-  const [product, setProduct] = useState<ProductDetailsDto | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!productId) return;
-
-    setProduct(null);
-    setLoading(true);
-    setError(null);
-
-    ApiService.getProductById(productId)
-      .then(data => setProduct(mapProductDto(data))) // <-- Normalizamos aquí
-      .catch((err: unknown) => {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('Unexpected error occurred');
-        }
-      })
-      .finally(() => setLoading(false));
-  }, [productId]);
-
-  return { product, loading, error };
+  return useQuery<ProductDetailsDto>({
+    queryKey: ['product', productId],
+    queryFn: () => ApiService.getProductById(productId),
+    enabled: !!productId,
+    staleTime: 1000 * 60 * 5,
+    retry: 2,
+    select: mapProductDto, // <- Aquí lo aplicamos
+  });
 }
