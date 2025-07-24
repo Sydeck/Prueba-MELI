@@ -44,7 +44,7 @@ export default function ColorCardsMobile({
                 )}
               >
                 <img
-                  src={c.image}
+                  src={c.images}
                   alt={c.color}
                   className="w-14 h-13 object-cover mb-2 items-center"
                 />

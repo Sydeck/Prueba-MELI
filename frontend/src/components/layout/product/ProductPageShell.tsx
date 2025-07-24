@@ -18,27 +18,20 @@ interface Props {
 
 export default function ProductPageShell({ productId }: Props): JSX.Element {
   const { data, isPending: loading, error } = useProductDetails(productId);
-
-  // Inicializamos el hook SIEMPRE con valores seguros
-
   const [qty, setQty] = useState(1);
-  // Estado para el color activo
   const [activeColor, setActiveColor] = useState(0);
 
-  // Cuando llegan los datos actualizamos el límite del stock
   useEffect(() => {
     if (data?.availability?.stock) {
       const stock = Math.min(data.availability.stock, 10);
-      setQty(prev => Math.min(prev, stock)); // Ajustar qty si stock es menor
+      setQty(prev => Math.min(prev, stock));
     }
   }, [data?.availability?.stock, setQty]);
 
-  // Estados de carga / error
   if (loading) return <div className="p-4">Cargando producto...</div>;
   if (error) return <div className="p-4 text-red-500">Error: {String(error)}</div>;
   if (!data?.product) return <div className="p-4">Producto no encontrado</div>;
 
-  // Extraemos datos del mapper
   const product = data.product;
   const seller = data.seller;
   const shipping = data.shipping;
@@ -47,20 +40,29 @@ export default function ProductPageShell({ productId }: Props): JSX.Element {
   const maxQty = Math.min(availability.stock ?? 1, 10);
 
   return (
-    <main className="w-full bg-[#EDEDED]">
-      <div className="max-w-screen-xl mx-auto lg:px-8 bg-[#EDEDED]">
+    <main className="w-full bg-ml-gray-body">
+      <div className="max-w-screen-xl mx-auto lg:px-8 bg-ml-gray-body">
         {/* Breadcrumbs */}
         <div className="hidden lg:block py-3 ">
           <BreadcrumbBar
             related={['Celulares', product.title]}
             path={[
-              { label: 'Celulares y Telefonía', href: '#' },
-              { label: 'Celulares y Smartphones', href: '#' },
+              {
+                label: 'Celulares y Telefonía',
+                href: 'https://www.mercadolibre.com.mx/c/celulares-y-telefonia',
+              },
+              {
+                label: 'Celulares y Smartphones',
+                href: 'https://listado.mercadolibre.com.mx/celulares-telefonia/celulares-smartphones/',
+              },
               { label: product.title },
             ]}
             backHref="#"
             actions={[
-              { label: 'Vender uno igual', href: '#' },
+              {
+                label: 'Vender uno igual',
+                href: 'https://www.mercadolibre.com.mx/syi/core/list/equals?itemId=MLM3605988382',
+              },
               { label: 'Compartir', onClick: () => navigator.share?.({ url: location.href }) },
             ]}
           />
@@ -72,10 +74,11 @@ export default function ProductPageShell({ productId }: Props): JSX.Element {
           <section id="left-column">
             <div className="lg:grid lg:grid-cols-[auto_340px] lg:w-full">
               {/* Galería */}
+
               <div id="product-gallery">
                 <div className="hidden lg:block h-[480px] rounded-md shadow-sm">
                   <ProductGallery
-                    images={product.images}
+                    images={product.variants[activeColor].images}
                     width={380}
                     height={450}
                     zoomContainerWidth={700}

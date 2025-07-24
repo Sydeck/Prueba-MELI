@@ -110,6 +110,7 @@ export default function MobileCarousel({
             key={src}
             className="snap-center shrink-0 w-full h-[400px] flex items-center justify-center bg-white relative"
           >
+            {console.log('carrousek', src)}
             <img
               src={src}
               alt={`img-${i}`}

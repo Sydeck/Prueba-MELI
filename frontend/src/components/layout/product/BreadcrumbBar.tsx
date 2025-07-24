@@ -31,7 +31,7 @@ export default function BreadcrumbBar({
 }: BreadcrumbBarProps) {
   return (
     <section
-      className={clsx('hidden lg:block text-gray-800 bg-[#EDEDED] p-2 rounded', className)}
+      className={clsx('hidden lg:block text-gray-800 bg-ml-gray-body p-2 rounded', className)}
       data-testid="breadcrumb-bar"
     >
       {/* --- También puede interesarte --- */}

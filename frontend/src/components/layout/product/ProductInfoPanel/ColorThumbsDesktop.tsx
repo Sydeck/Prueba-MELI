@@ -31,7 +31,7 @@ export default function ColorThumbsDesktop({ colors = [], activeColor, onSelect 
             )}
             onClick={() => onSelect(idx)}
           >
-            <img src={c.image} alt={c.color} className="w-full h-full object-contain" />
+            <img src={c.images} alt={c.color} className="w-full h-full object-contain" />
           </button>
         ))}
       </div>
