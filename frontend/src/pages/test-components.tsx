@@ -27,7 +27,7 @@ export default function TestPage() {
   };
 
   return (
-    <div className="min-h-screen-xl flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       <ProductPageShell />
       <Footer />

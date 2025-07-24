@@ -1,7 +1,7 @@
 import { Product } from '@/types/product.types';
 import { ApiSuccessWrapper, HealthCheckResponse } from '@/types/api.types';
 import { IHttpClient } from '../api/httpClient';
-import { ApiConfig } from '../api/ApiConfig';
+import { ApiConfig } from '../api/apiConfig';
 import { ProductValidator } from '../validators/ProductValidator';
 
 export interface IProductRepository {
@@ -21,7 +21,6 @@ export class ProductRepository implements IProductRepository {
       /**
        * Validate the product ID
        */
-      ProductValidator.validateProduct(productId);
       const endpoint = this.config.buildEndpoint(this.config.endpoints.product.getById, {
         id: productId,
       });
