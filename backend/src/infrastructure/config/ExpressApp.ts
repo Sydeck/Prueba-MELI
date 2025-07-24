@@ -36,7 +36,6 @@ export class ExpressApp {
         service: 'Mercado Libre challenge',
       });
     });
-
     this.app.get('/api/v1/products/:id', this.productController.getProductDetails);
   }
 
@@ -46,5 +45,9 @@ export class ExpressApp {
 
   listen(port: number): void {
     this.app.listen(port, () => console.log(`Server running on port ${port}`));
+  }
+
+  public getApp() {
+    return this.app;
   }
 }

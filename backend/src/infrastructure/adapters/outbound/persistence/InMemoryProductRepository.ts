@@ -34,60 +34,11 @@ export class InMemoryProductRepository implements ProductRepository {
   }
 
   private seedFakeData(): void {
-    /** Samsung Galaxy A54 */
-    const samsungImages = [
-      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_828877-MLU54983902171_052023-F.webp'),
-      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_929123-MLU80276924341_102024-F.webp'),
-      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_812038-MLA74676703594_022024-F.webp'),
-      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_929123-MLU80276924341_102024-F.webp'),
-    ];
-    const samsungSeller = new Seller(
-      new SellerId('12345'),
-      new SellerName('Samsung'),
-      new SellerStatus('TIENDA_OFICIAL'),
-      new SellerMetrics(1000, 50000),
-      new SellerReputation(4.8),
-      'https://http2.mlstatic.com/D_NQ_NP_988300-MLA81040243606_122024-T.webp'
-    );
-
-    const galaxyProduct = new Product(
-      new ProductId('MLA123456789'),
-      new ProductTitle('Samsung Galaxy A54 5G 256 GB'),
-      new ProductDescription('Latest smartphone with advanced features and 5G connectivity'),
-      new Money(439.99, 'USD', 12),
-      samsungImages,
-      samsungSeller,
-      new ShippingInfo(new Money(0, 'USD', 0), true, '2-3 días'),
-      new Availability(15, true),
-      new ProductCondition('Nuevo'),
-      new ProductRating(4.6),
-      1200,
-      [
-        'Pantalla AMOLED de 6.4"',
-        'Procesador Octa-core',
-        'Batería de 5000 mAh',
-        'Cámara principal 50 MP',
-      ],
-      [
-        new ProductSpecs({ label: 'RAM', value: '8 GB' }),
-        new ProductSpecs({ label: 'Almacenamiento', value: '256 GB' }),
-        new ProductSpecs({ label: 'Color', value: 'Negro' }),
-      ],
-      [
-        new ProductVariant({
-          id: 'VAR123',
-          color: 'Negro',
-          storage: '256GB',
-          price: 439.99,
-          images: samsungImages.map(img => new ProductImage(img.url)),
-          stock: 10,
-        }),
-      ]
-    );
-
     /** Nothing Phone */
-    const nothingImages = [
+    const nothingImagesBase = [
       new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_676234-MLA85338913814_062025-F.webp'),
+    ];
+    const nothingImagesBaseVariant = [
       new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_790769-MLA85340775002_062025-F.webp'),
     ];
     const nothingSeller = new Seller(
@@ -103,10 +54,10 @@ export class InMemoryProductRepository implements ProductRepository {
       new ProductId('MLA987654321'),
       new ProductTitle('Nothing Phone 3A Pro 12GB RAM 256GB ROM'),
       new ProductDescription(
-        'El Nothing Phone (3a) Pro redefine el diseño de los smartphones con su icónico cuerpo transparente...'
+        'El Nothing Phone (3a) Pro es la variante de gama media‑alta de la serie 3a de Nothing Technology Limited, anunciada el 4 de marzo de 2025 y disponible desde el 11 de marzo de 2025. Destaca por su diseño semitransparente con interfaz Glyph, un marco de aluminio pulido y una parte trasera de policarbonato, que deja entrever ligeramente su electrónica interna. Su estética minimalista se combina con un rendimiento equilibrado y un software limpio basado en Android 15, mediante NothingOS 3.1'
       ),
       new Money(599.99, 'USD', 15),
-      nothingImages,
+      nothingImagesBase,
       nothingSeller,
       new ShippingInfo(new Money(25, 'USD', 0), false, '3-5 días'),
       new Availability(8, true),
@@ -130,7 +81,7 @@ export class InMemoryProductRepository implements ProductRepository {
           color: 'Negro',
           storage: '256GB',
           price: 599.99,
-          images: nothingImages.map(img => new ProductImage(img.url)),
+          images: nothingImagesBase.map(img => new ProductImage(img.url)),
           stock: 8,
         }),
         new ProductVariant({
@@ -138,58 +89,12 @@ export class InMemoryProductRepository implements ProductRepository {
           color: 'Gris',
           storage: '256GB',
           price: 599.99,
-          images: nothingImages.map(img => new ProductImage(img.url)),
+          images: nothingImagesBaseVariant.map(img => new ProductImage(img.url)),
           stock: 5,
         }),
       ]
     );
 
-    /** iPhone 15 */
-    const iphoneImages = [
-      new ProductImage('https://http2.mlstatic.com/D_NQ_NP_2X_912227-MLA71782903150_092023-F.webp'),
-    ];
-    const appleSeller = new Seller(
-      new SellerId('99999'),
-      new SellerName('Apple Store'),
-      new SellerStatus('TIENDA_OFICIAL'),
-      new SellerMetrics(2000, 100000),
-      new SellerReputation(4.9),
-      'https://upload.wikimedia.org/apple_logo.png'
-    );
-
-    const iphoneProduct = new Product(
-      new ProductId('MLA555666777'),
-      new ProductTitle('iPhone 15 Pro Max 256GB'),
-      new ProductDescription('Latest iPhone with titanium design and advanced camera system'),
-      new Money(1199.99, 'USD', 5),
-      iphoneImages,
-      appleSeller,
-      new ShippingInfo(new Money(0, 'USD', 0), true, '1-2 días'),
-      new Availability(25, true),
-      new ProductCondition('Nuevo'),
-      new ProductRating(4.9),
-      5000,
-      ['Diseño de titanio', 'Cámara de 48 MP', 'Chip A17 Pro'],
-      [
-        new ProductSpecs({ label: 'RAM', value: '8 GB' }),
-        new ProductSpecs({ label: 'Almacenamiento', value: '256 GB' }),
-        new ProductSpecs({ label: 'Color', value: 'Titanio Azul' }),
-      ],
-      [
-        new ProductVariant({
-          id: 'VAR300',
-          color: 'Titanio Azul',
-          storage: '256GB',
-          price: 1199.99,
-          images: iphoneImages.map(img => new ProductImage(img.url)),
-          stock: 25,
-        }),
-      ]
-    );
-
-    /** Save products */
-    this.products.set(galaxyProduct.id.value, galaxyProduct);
     this.products.set(nothingProduct.id.value, nothingProduct);
-    this.products.set(iphoneProduct.id.value, iphoneProduct);
   }
 }
