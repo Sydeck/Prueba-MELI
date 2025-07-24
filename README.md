@@ -67,35 +67,37 @@ src/
 ## 🛠️ Tech Stack
 
 ### Backend
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| **Node.js** | 18.17.0 | Runtime environment |
-| **TypeScript** | 5.1+ | Type safety and developer experience |
-| **Express.js** | 4.18+ | Web framework for REST API |
-| **Jest** | 29.6+ | Testing framework |
-| **Swagger** | 3.0 | API documentation |
+
+| Technology     | Version | Purpose                              |
+| -------------- | ------- | ------------------------------------ |
+| **Node.js**    | 18.17.0 | Runtime environment                  |
+| **TypeScript** | 5.1+    | Type safety and developer experience |
+| **Express.js** | 4.18+   | Web framework for REST API           |
+| **Jest**       | 29.6+   | Testing framework                    |
 
 ### Frontend
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| **Next.js** | 14.0+ | React framework with SSR/SSG |
-| **React** | 18.0+ | UI library |
-| **TypeScript** | 5.1+ | Type safety |
-| **TailwindCSS** | 3.3+ | Utility-first CSS framework |
-| **React Query** | 4.0+ | Server state management |
+
+| Technology      | Version | Purpose                      |
+| --------------- | ------- | ---------------------------- |
+| **Next.js**     | 14.0+   | React framework with SSR/SSG |
+| **React**       | 18.0+   | UI library                   |
+| **TypeScript**  | 5.1+    | Type safety                  |
+| **TailwindCSS** | 3.3+    | Utility-first CSS framework  |
+| **React Query** | 4.0+    | Server state management      |
 
 ### DevOps & Tools
-| Technology | Purpose |
-|-----------|---------|
-| **Docker** | Containerization |
+
+| Technology         | Purpose                         |
+| ------------------ | ------------------------------- |
+| **Docker**         | Containerization                |
 | **Docker Compose** | Local development orchestration |
-| **ESLint** | Code linting |
-| **Prettier** | Code formatting |
-| **Husky** | Git hooks |
+| **Prettier**       | Code formatting                 |
+
 
 ## ✨ Features
 
 ### Product Detail Page
+
 - [ ] 🖼️ **Image Gallery**: Interactive carousel with zoom functionality
 - [ ] 📝 **Product Information**: Title, description, specifications
 - [ ] 💰 **Dynamic Pricing**: Price display with discounts and currency formatting
@@ -106,6 +108,7 @@ src/
 - [ ] 🚚 **Shipping Information**: Costs, delivery time, and options
 
 ### API Features
+
 - [ ] 🔍 **Product Retrieval**: GET `/api/v1/products/:id`
 - [ ] 🏥 **Health Monitoring**: GET `/health`
 - [ ] 📚 **API Documentation**: Interactive Swagger UI
@@ -113,6 +116,7 @@ src/
 - [ ] 📊 **Request Logging**: Structured logging for monitoring
 
 ### Quality Assurance
+
 - [ ] 🧪 **Unit Tests**: Domain and business logic testing
 - [ ] 🔗 **Integration Tests**: API endpoint testing
 - [ ] 📱 **E2E Tests**: Complete user flow testing
@@ -161,12 +165,12 @@ npm run dev
 
 ### 🌐 Access the Application
 
-| Service | URL | Description |
-|---------|-----|-------------|
-| **Frontend** | http://localhost:3000 | Product detail page |
-| **Backend API** | http://localhost:3001 | REST API endpoints |
-| **API Documentation** | http://localhost:3001/docs | Interactive Swagger UI |
-| **Health Check** | http://localhost:3001/health | Service health status |
+| Service               | URL                          | Description            |
+| --------------------- | ---------------------------- | ---------------------- |
+| **Frontend**          | http://localhost:3000        | Product detail page    |
+| **Backend API**       | http://localhost:3001        | REST API endpoints     |
+| **API Documentation** | http://localhost:3001/docs   | Interactive Swagger UI |
+| **Health Check**      | http://localhost:3001/health | Service health status  |
 
 ## 💻 Development
 
@@ -209,36 +213,33 @@ mercadolibre-challenge/
 ```bash
 # Backend development
 cd backend
-npm run dev          # Start development server with hot reload
-npm run build        # Build for production
-npm test             # Run tests
-npm run test:watch   # Run tests in watch mode
+npm run dev           # Start development server with hot reload
+npm run test:unit     # Run tests
+npm run test:watch    # Run tests in watch mode
 npm run test:coverage # Run tests with coverage report
-npm run lint         # Lint code
-npm run lint:fix     # Fix linting issues
+
 
 # Frontend development
 cd frontend
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm test             # Run tests
-npm run test:watch   # Run tests in watch mode
-npm run lint         # Lint code
-npm run type-check   # TypeScript type checking
+npm run dev           # Start development server
+npm run build         # Build for production
+npm run test:unit     # Run tests
+npm run test:watch    # Run tests in watch mode
+npm run test:coverage # Run tests with coverage report
 ```
 
 ### Environment Variables
 
 #### Backend (.env)
+
 ```bash
 NODE_ENV=development
 PORT=3001
-LOG_LEVEL=debug
-API_VERSION=v1
+
 ```
 
 #### Frontend (.env.local)
+
 ```bash
 NEXT_PUBLIC_API_URL=http://localhost:3001
 NEXT_PUBLIC_APP_NAME=MercadoLibre Challenge
@@ -272,8 +273,6 @@ npm test                   # Run all tests
 npm run test:watch         # Watch mode
 npm run test:coverage      # Generate coverage report
 
-# E2E tests
-npm run test:e2e           # Run end-to-end tests
 ```
 
 ### Coverage Requirements
@@ -287,10 +286,10 @@ npm run test:e2e           # Run end-to-end tests
 
 ### Core Endpoints
 
-| Method | Endpoint | Description | Response |
-|--------|----------|-------------|----------|
-| `GET` | `/health` | Health check | `200 OK` |
-| `GET` | `/api/v1/products/:id` | Get product details | `200 OK` / `404 Not Found` |
+| Method | Endpoint               | Description         | Response                   |
+| ------ | ---------------------- | ------------------- | -------------------------- |
+| `GET`  | `/health`              | Health check        | `200 OK`                   |
+| `GET`  | `/api/v1/products/:id` | Get product details | `200 OK` / `404 Not Found` |
 
 ### Example Response
 
@@ -305,10 +304,7 @@ npm run test:e2e           # Run end-to-end tests
       "currency": "USD",
       "discount": 12
     },
-    "images": [
-      "https://http2.mlstatic.com/image1.webp",
-      "https://http2.mlstatic.com/image2.webp"
-    ],
+    "images": ["https://http2.mlstatic.com/image1.webp", "https://http2.mlstatic.com/image2.webp"],
     "seller": {
       "id": "SELLER123",
       "name": "TechStore Official",
@@ -332,34 +328,10 @@ npm run test:e2e           # Run end-to-end tests
 }
 ```
 
-### Interactive Documentation
-
-Visit http://localhost:3001/docs for the complete interactive API documentation powered by Swagger UI.
-
-## 🚀 Deployment
-
-### Production Build
-
-```bash
-# Build both applications
-docker-compose -f docker-compose.prod.yml up --build
-
-# Or build separately
-cd backend && npm run build
-cd frontend && npm run build
-```
-
-### Cloud Deployment
-
-This application is configured for deployment on:
-
-- **Frontend**: [Vercel](https://vercel.com/) (Recommended for Next.js)
-- **Backend**: [Railway](https://railway.app/) / [Render](https://render.com/)
-- **Container**: Any Docker-compatible platform (AWS ECS, Google Cloud Run, etc.)
-
 ### Environment Setup
 
 1. **Backend Environment Variables**:
+
    ```bash
    NODE_ENV=production
    PORT=3001
