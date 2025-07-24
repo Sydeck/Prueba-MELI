@@ -47,19 +47,38 @@ export class GetProductDetailsUseCase implements GetProductDetailsPort {
 
   private mapToDto(product: Product): ProductDetailsDto {
     return {
-      id: product.id.value,
-      title: product.title.value,
-      description: product.description.value,
-      price: {
-        amount: product.price.amount,
-        currency: product.price.currency,
-        discount: product.price.discount,
-        formatted: product.price.formatForDisplay(),
+      product: {
+        id: product.id.value,
+        title: product.title.value,
+        description: product.description.value,
+        condition: product.condition.value,
+        price: {
+          amount: product.price.amount,
+          currency: product.price.currency,
+          discount: product.price.discount,
+          formatted: product.price.formatForDisplay(),
+        },
+        images: product.images.map(image => image.url),
+        rating: product.rating.value,
+        reviews: product.reviews,
+        facts: product.facts,
+        specs: product.specs.map(spec => ({
+          label: spec.label,
+          value: spec.specValue,
+        })),
+        variants: product.variants.map(variant => ({
+          id: variant.variantId,
+          color: variant.variantColor,
+          storage: variant.variantStorage,
+          price: variant.variantPrice,
+          image: variant.variantImage,
+          stock: variant.variantStock,
+        })),
       },
-      images: product.images.map(image => image.url),
       seller: {
         id: product.seller.id.value,
         name: product.seller.name.value,
+        brandLogo: product.seller.brandLogo,
         status: product.seller.status.value,
         reputation: product.seller.reputation.score,
         metrics: {

@@ -1,37 +1,67 @@
 /**
  * Data transfer object for product details API
  */
-
-export interface ProductDetailsDto {
+export interface Product {
   id: string;
   title: string;
   description: string;
-  price: {
-    amount: number;
-    currency: string;
-    discount: number;
-    formatted: string;
-  };
+  condition: string;
+  price: Price;
   images: string[];
-  seller: {
-    id: string;
-    name: string;
-    status: string;
-    reputation: number | null;
-    metrics: {
-      totalProducts: number;
-      totalSales: number;
-    };
-  };
-  shipping: {
-    cost: number;
-    isFree: boolean;
-    estimatedDeliveryDays: string;
-  };
-  availability: {
-    stock: number;
-    available: boolean;
-  };
+  rating: number;
+  reviews: number;
+  facts: string[];
+  specs: ProductSpec[];
+  variants: ProductVariant[];
+}
+export interface ProductVariant {
+  id: string;
+  color: string;
+  storage: string;
+  price: number;
+  image: string;
+  stock: number;
+}
+
+export interface ProductSpec {
+  label: string;
+  value: string;
+}
+
+export interface Price {
+  amount: number;
+  currency: string;
+  discount: number;
+  formatted: string;
+}
+
+export interface SellerMetrics {
+  totalProducts: number;
+  totalSales: number;
+}
+export interface Seller {
+  id: string;
+  name: string;
+  brandLogo: string;
+  status: string;
+  reputation: number | null;
+  metrics: SellerMetrics;
+}
+export interface Shipping {
+  cost: number;
+  isFree: boolean;
+  estimatedDeliveryDays: string;
+}
+
+export interface Availability {
+  stock: number;
+  available: boolean;
+}
+export interface ProductDetailsDto {
+  product: Product;
+  seller: Seller;
+  shipping: Shipping;
+  availability: Availability;
 }
 
 export interface GetProductDetailsRequest {
