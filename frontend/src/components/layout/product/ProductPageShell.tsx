@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 
 import ProductGallery from '@/components/ui/ProductGallery';
@@ -8,37 +8,55 @@ import ProductInfoPanel from './ProductInfoPanel/ProductInfoPanel';
 import BuyBox from './BuyBox/BuyBox';
 import SellerCard from './BuyBox/SellerCard';
 import BreadcrumbBar from './BreadcrumbBar';
+
 import { useQuantity } from '@/hooks/useQuantity';
 import { useProductDetails } from '@/hooks/useProductDetails';
 
-export default function ProductPageShell({ productId }: { productId: string }): JSX.Element {
-  const { product, loading, error } = useProductDetails(productId);
+interface Props {
+  productId: string;
+}
 
-  // Valores seguros por defecto para evitar error de hooks
-  const stock = product?.availability?.stock ?? 1;
-  const maxQty = Math.min(stock, 10);
+export default function ProductPageShell({ productId }: Props): JSX.Element {
+  const { data, isPending: loading, error } = useProductDetails(productId);
 
-  // El hook siempre se ejecuta, incluso si el producto aún no está
-  const { qty, setQty } = useQuantity(1, maxQty);
+  // Inicializamos el hook SIEMPRE con valores seguros
+  const { qty, setQty } = useQuantity(1, 1);
 
+  // Estado para el color activo
+  const [activeColor, setActiveColor] = useState(0);
+
+  // Cuando llegan los datos actualizamos el límite del stock
+  useEffect(() => {
+    if (data?.availability?.stock) {
+      const stock = Math.min(data.availability.stock, 10);
+      setQty(prev => Math.min(prev, stock)); // Ajustar qty si stock es menor
+    }
+  }, [data?.availability?.stock, setQty]);
+
+  // Estados de carga / error
   if (loading) return <div className="p-4">Cargando producto...</div>;
-  if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
-  if (!product) return <div className="p-4">Producto no encontrado</div>;
+  if (error) return <div className="p-4 text-red-500">Error: {String(error)}</div>;
+  if (!data?.product) return <div className="p-4">Producto no encontrado</div>;
 
-  const prod = product.product;
-  const seller = product.seller;
+  // Extraemos datos del mapper
+  const product = data.product;
+  const seller = data.seller;
+  const shipping = data.shipping;
+  const availability = data.availability;
+
+  const maxQty = Math.min(availability.stock ?? 1, 10);
 
   return (
     <main className="w-full bg-[#EDEDED]">
       <div className="max-w-screen-xl mx-auto lg:px-8 bg-[#EDEDED]">
         {/* Breadcrumbs */}
-        <div className="hidden lg:block py-3">
+        <div className="hidden lg:block py-3 ">
           <BreadcrumbBar
-            related={['Celulares', prod.title]}
+            related={['Celulares', product.title]}
             path={[
               { label: 'Celulares y Telefonía', href: '#' },
               { label: 'Celulares y Smartphones', href: '#' },
-              { label: prod.title },
+              { label: product.title },
             ]}
             backHref="#"
             actions={[
@@ -48,16 +66,16 @@ export default function ProductPageShell({ productId }: { productId: string }): 
           />
         </div>
 
-        {/* Layout */}
+        {/* Layout principal */}
         <div className="lg:grid lg:grid-cols-[850px_1fr] bg-white">
-          {/* LEFT column */}
-          <section id="left-column ">
+          {/* Columna izquierda */}
+          <section id="left-column">
             <div className="lg:grid lg:grid-cols-[auto_340px] lg:w-full">
-              {/* Gallery */}
+              {/* Galería */}
               <div id="product-gallery">
                 <div className="hidden lg:block h-[480px] rounded-md shadow-sm">
                   <ProductGallery
-                    images={prod.images}
+                    images={[product.variants[activeColor]?.image || product.images[0]]}
                     width={380}
                     height={450}
                     zoomContainerWidth={700}
@@ -67,50 +85,48 @@ export default function ProductPageShell({ productId }: { productId: string }): 
                 </div>
               </div>
 
-              {/* Product info panel */}
+              {/* Panel de info del producto */}
               <ProductInfoPanel
                 brandLogo={seller.brandLogo}
                 brandLinkLabel={`Visita la tienda oficial de ${seller.name}`}
-                condition={prod.condition}
+                condition={product.condition}
                 soldQty={seller.metrics.totalSales}
-                title={prod.title}
-                rating={prod.rating}
-                reviews={prod.reviews}
-                oldPrice={`$ ${(prod.price.amount * 1.2).toFixed(2)}`} // Simulamos precio anterior
-                price={prod.price.formatted}
+                title={product.title}
+                rating={product.rating}
+                reviews={product.reviews}
+                oldPrice={`$ ${(product.price.amount * 1.2).toFixed(2)}`} // Precio simulado
+                price={product.price.formatted}
                 priceCents="00"
-                discountPct={`${prod.price.discount}% OFF`}
+                discountPct={`${product.price.discount}% OFF`}
                 installments="Consulta promociones"
                 ivaText="IVA incluido"
-                colors={prod.variants.map(v => ({
-                  src: v.image,
-                  alt: `${v.color} ${v.storage}`,
-                  stock: v.stock,
-                  price: v.price,
-                }))}
-                facts={prod.facts}
+                colors={product.variants}
+                activeColor={activeColor}
+                onColorSelect={setActiveColor}
+                facts={product.facts}
               />
             </div>
 
             {/* Descripción y Specs */}
             <div className="hidden lg:block">
-              <ProductDescription text={prod.description} collapsedLines={100} />
-              <SpecsTable specs={prod.specs} />
+              <ProductDescription text={product.description} collapsedLines={100} />
+              <SpecsTable specs={product.specs} />
             </div>
           </section>
 
-          {/* RIGHT column (BuyBox + Seller desktop) */}
+          {/* Columna derecha */}
           <aside
             id="right-column"
             className={clsx('mt-6 space-y-4', 'lg:mt-0 lg:space-y-6 lg:pl-0')}
           >
-            <BuyBox stock={stock} qty={qty} setQty={setQty} maxQty={maxQty} />
-            <SellerCard stock={stock} desktopOnly />
+            <BuyBox stock={availability.stock} qty={qty} setQty={setQty} maxQty={maxQty} />
+            <SellerCard stock={availability.stock} desktopOnly />
           </aside>
 
+          {/* Mobile: Descripción y Specs */}
           <div className="block lg:hidden">
-            <ProductDescription text={prod.description} />
-            <SpecsTable specs={prod.specs} />
+            <ProductDescription text={product.description} />
+            <SpecsTable specs={product.specs} />
           </div>
         </div>
       </div>
